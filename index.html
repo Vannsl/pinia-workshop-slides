@@ -82,10 +82,10 @@
 							<li>Learn about Options and Setup Stores</li>
 							<li>Create, access, and mutate state</li>
 							<li>Use Actions and Getters</li>
-							<li>Subscribing to changes</li>
 							<li>Composing stores</li>
+							<li>Subscribing to changes</li>
 							<li>Migrating from Vuex to Pinia</li>
-							<li>Testing stores</li>
+							<li style="display:none;">Testing stores</li>
 						</ul>
 					</section>
 					<section>
@@ -954,7 +954,54 @@ cartStore.$patch({ items: [] })
 </code></pre>
 <p><small>You can set the initial state, helpful e.g. in tests or for SSR.</small></p>
 					</section>
-					<section>
+					<section data-auto-animate>
+						<h2>Observe any state changes</h2>
+					</section>
+					<section data-auto-animate>
+						<h2>Observe any state changes</h2>
+						<p>Watch the whole instance with <code>deep: true</code></p>
+							<pre><code data-trim data-line-numbers class="hljs typescript">
+watch(
+	cartStore.state,
+	(state) => {
+		// persist the whole state to the local storage whenever it changes
+		localStorage.setItem('cartStore', JSON.stringify(state))
+	},
+	{ deep: true }
+)	
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing to the state</h2>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing to the state</h2>
+						<p>Initialization</p>
+							<pre><code data-trim data-line-numbers class="hljs typescript">
+cartStore.$subscribe((mutation, state) => {
+	// import { MutationType } from 'pinia'
+	mutation.type // 'direct' | 'patch object' | 'patch function'
+	// same as cartStore.$id
+	mutation.storeId // 'cart'
+	// only available with mutation.type === 'patch object'
+	mutation.payload // patch object passed to cartStore.$patch()
+
+	// persist the whole state to the local storage whenever it changes
+	localStorage.setItem('cartStore', JSON.stringify(state))
+})	
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing vs. watch 🤔</h2>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing vs. watch 🤔</h2>
+						<p>The advantage of using <code>$subscribe()</code> over a regular <code>watch()</code> is that subscriptions will trigger only once after patches.</p>
+					</section>
+					<section data-auto-animate>
+						<h2>Resetting the state</h2>
+					</section>
+					<section data-auto-animate>
 						<h2>Resetting the state</h2>
 						<p>Resets the state of <strong>exactly this store</strong>.</p>
 							<pre><code data-trim data-line-numbers>
@@ -971,7 +1018,7 @@ cartStore.$reset();
 								<li>Add state variable <code>currentColorSchemeSlug</code>.</li>
 								<li>Set the default of the variable to <code>"light"</code>.</li>
 								<li>Update the variable when interacting with the radio buttons using a <code>v-model</code>.</li>
-								<li>Add or remove the CSS class <code>dark</code> on the <code>html</code> attribute depending on the value of  <code>currentColorSchemeSlug</code>.</li>
+								<li>Add or remove the CSS class <code>dark</code> on the <code>html</code> attribute depending on the value of <code>currentColorSchemeSlug</code>. (Hint: <code>watch</code> or <code>$subscribe</code>)</li>
 								<li>Bonus 1: Implement alternative solution using <code>$patch</code> to update the state.</li>
 								<li>
 									Bonus 2: Sync the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
@@ -1977,13 +2024,16 @@ export const useCartStore = defineStore("Cart", {
 						<p>https://pinia.vuejs.org/cookbook/composing-stores.html</p>
 					</section>
 					<section>
-						<!-- TODO: Composing -->
 						<h2>Exercise F</h2>
 						<ol>
 							<li>
-								Call stats store action in todo items store
+								Create an action in <code>useStatisticStore</code> to update the count of todo items. The function receives the <code>count: number</code> as parameter.
+							</li>
+							<li>
+								Call this action from inside the <code>useTodoListStore</code> when adding new items.
 							</li>
 						</ol>
+						<p><small>Hint: It's not necessary to update the number, when a user archives an item. We want to show the total number of items, active and archived ones.</small></p>
 					</section>
 					<section>
 						<h2>Solution F</h2>
