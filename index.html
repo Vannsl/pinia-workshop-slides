@@ -58,7 +58,7 @@
 					<section>
 						<h2>One-day Workshop</h2>
 						<ul>
-							<li>10am Welcome</li>
+							<li>9am Welcome</li>
 							<li>12pm Lunch break</li>
 							<li>3pm Coffee break</li>
 							<li>4pm Closing</li>
@@ -70,23 +70,22 @@
 							<div><strong>Theory</strong></div>
 							<div style="margin-bottom: 1rem"><small>In each section we'll learn the theory for an exercise afterwards. Ask questions anytime!</small></div>
 							<div><strong>Exercise</strong></div>
-							<div style="margin-bottom: 2rem"><small>Find the exercises here in the slides at the end of each section, or in the file <code>EXERCISES.md</code> in the <code>root</code> directory of the codebase.</small></div>
+							<div style="margin-bottom: 1rem"><small>Find the exercises here in the slides at the end of each section.</small></div>
 							<div><strong>Solution</strong></div>
-							<div><small>Find the solutions to the exercises in feature branches, linked here in the slides or in the file `EXERCISES.md`.</small></div>
+							<div><small>Find the solutions to the exercises in feature branches, linked here in the slides.</small></div>
 						</div>
 					</section>
 					<section>
 						<h2>Types of exercises</h2>
 						<ul>
 							<li>Install and register Pinia</li>
-							<li>Implementing an Option Store</li>
-							<li>Implementing a Setup Store</li>
-							<li>Pinia State + Actions + Getters</li>
-							<li>Subscribe to a store</li>
-							<li>Reset stores</li>
+							<li>Learn about Options and Setup Stores</li>
+							<li>Create, access, and mutate state</li>
+							<li>Use Actions and Getters</li>
+							<li>Subscribing to changes</li>
 							<li>Composing stores</li>
-							<li>Testing stores</li>
 							<li>Migrating from Vuex to Pinia</li>
+							<li>Testing stores</li>
 						</ul>
 					</section>
 					<section>
@@ -111,10 +110,22 @@
 						<ul>
 							<li>git@github.com:Vannsl/pinia-workshop.git</li>
 						</ul></li>
-						<li><code>npm/yarn/pnpm install</code> ✅</li>
-						<li><code>npm/yarn/pnpm run dev</code> ✅</li>
-						<li>Everybody has a laptop with charger, enough to drink, ...?</li>
-					</ul>
+						<li>Codebase setup ✅</li>
+						</ul>
+						<pre><code>$ npm install
+$ yarn install
+$ pnpm install
+
+$ npm run dev
+$ yarn run dev
+$ pnpm run dev
+</code></pre>
+				</section>
+				<section>
+					<h2>Workshop App</h2>
+					<p>
+						Let's check out the app and codebase we're going to build today.
+					</p>
 				</section>
 				<section>
 					<section data-auto-animate="">
@@ -158,18 +169,14 @@
 						</ul>
 					</section>
 					<section data-auto-animate="">
-						<h2>Pinia</h2>
-						<ul>
-							<li>Recommended for <strong>global</strong> state management in Vue</li>
-							<li>Eduardo San Martin Morote (@posva) - Vue Core Team member</li>
-							<li>Started in Nov 2019</li>
-							<li>Experiment how a Store for Vue 3 with Composition API might look like</li>
-							<li>Became the successor of Vuex 4</li>
-							<li>Can be used with Vue 2 and 3</li>
-						</ul>
+						<h2>Vue 2</h2>
 					</section>
-					<section>
-						<h2>Vue 2 / Vue 3</h2>
+					<section data-auto-animate="">
+						<h2>Vue 2</h2>
+						<p>Yes, you can use Pinia with Vue 2.</p>
+					</section>
+					<section data-auto-animate="">
+						<h2>Vue 2</h2>
 						<p>Yes, you can use Pinia with Vue 2.</p>
 						<div style="text-align:left">
 							<p><small>You still might want to import <code>@vue/composition-api</code>. You can access the store in <code>script setup</code> or, when using Options API, in the <code>setup()</code> function.</small></p>
@@ -181,12 +188,12 @@
 						<h2>Local state management</h2>
 						<pre><code data-trim data-line-numbers class="handlebars hljs">
 <script setup>
-	import { ref } from 'vue'
+	import { ref } from "vue"
 
-	const count = ref(0) // or reactive
+	const count = ref(0); // or reactive
 
 	function increment() {
-		count.value++
+		count.value++;
 	}
 </script>
 
@@ -208,17 +215,89 @@
 							<li>Composition API</li>
 						</ul>
 					</section>
-					<section>
-						<h2>Global state management with Composables</h2>
-					</section>
-					<section>
+					<section data-auto-animate="">
 						<h2>Local state management with Composables</h2>
 					</section>
-					<section>
-						<h2>Stores with the provide/inject pattern</h2>
+					<section data-auto-animate="">
+						<h2>Local state management with Composables</h2>
+						<pre><code data-trim data-line-numbers>// composables/useItems.ts
+import { ref, readonly } from "vue";
+
+function useItems() {
+	const items = ref([]);
+
+	async function loadItems() {
+		// try catch
+		items.value = fetch("/getItems");
+	}
+
+	function deleteItem(id: number) {
+		items.value = items.value.filter((item) => item.id !== id);
+	}
+
+	return {
+		items: readonly(items.value),
+		loadItems,
+		deleteItem,
+	}
+}
+						</code></pre>
 					</section>
-					<section>
-						<p>Slides about reactivity with composables</p>
+					<section data-auto-animate="">
+						<h2>Global state management with Composables</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Global state management with Composables</h2>
+						<pre><code data-trim data-line-numbers>// composables/useItems.ts
+import { ref, readonly } from "vue";
+							
+const items = ref([]);
+
+function useItems() {
+	async function loadItems() {
+		// try catch
+		items.value = fetch("/getItems");
+	}
+
+	function deleteItem(id: number) {
+		items.value = items.value.filter((item) => item.id !== id);
+	}
+
+	return {
+		items: readonly(items.value),
+		loadItems,
+		deleteItem,
+	}
+}
+						</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Global state management with Composables</h2>
+						<pre><code data-trim data-line-numbers="4">// composables/useItems.ts
+import { ref, readonly } from "vue";
+							
+const items = ref([]);
+
+function useItems() {
+	async function loadItems() {
+		// try catch
+		items.value = fetch("/getItems");
+	}
+
+	function deleteItem(id: number) {
+		items.value = items.value.filter((item) => item.id !== id);
+	}
+
+	return {
+		items: readonly(items.value),
+		loadItems,
+		deleteItem,
+	}
+}
+						</code></pre>
+					</section>
+					<section data-visibility="hidden">
+						<h2>Stores with the provide/inject pattern</h2>
 					</section>
 					<section>
 						<h2>Do we need a library?</h2>
@@ -240,7 +319,25 @@
 					<section>
 						<h2>Introduction to Pinia</h2>
 					</section>
-					<section  data-auto-animate>
+					<section data-auto-animate>
+						<h2>Misconception</h2>
+					</section>
+					<section data-auto-animate>
+						<h2>Misconception</h2>
+						<p><strong>Global</strong> state management does not mean to have one big store.</p>
+					</section>
+					<section data-auto-animate>
+						<h2>Misconception</h2>
+						<p><strong>Global</strong> state management does not mean to have one big store.</p>
+						<p>Pinia is modular by design: Build multiple stores and let your bundler code split them automatically.</p>
+					</section>
+					<section>
+						<picture>
+							<img src="/img/pinia-global.png" alt="" style="max-height: 40vh;" />
+							<figcaption><small>Several components getting data from several stores</small></figcaption>
+						</picture>
+					</section>
+					<section data-auto-animate>
 						<h2>Structure</h2>
 						<ul>
 							<li><code>/src/stores/useStore.[js|ts]</code></li>
@@ -266,12 +363,6 @@
 							<li><code>/src/stores/useCartStore.[js|ts]</code></li>
 							<li><code>/src/stores/useAuthenticationStore.[js|ts]</code></li>
 						</ul>
-					</section>
-					<section>
-						<h2>Misconception</h2>
-						<p>Global state management does not mean one global store (anymore).</p>
-						<p>Pinia is modular by design: Build multiple stores and let your bundler code split them automatically.</p>
-						<!-- TODO: ADD IMAGE -->
 					</section>
 					<section>
 						<h2>Installation</h2>
@@ -341,17 +432,6 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate>
 						<h2>Creating a store</h2>
-						<pre><code data-trim data-line-numbers="2">
-// stores/useCartStore.[js,ts]
-import { defineStore } from "pinia";
-	
-export const useCartStore = defineStore("Cart", {
-  // ...
-})
-</code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Creating a store</h2>
 						<!-- TODO: replace image -->
 						<img src="/img/product-store.png">
 						<p><small>This <em>name</em>, also referred as id, is necessary and is used by Pinia to connect the store to the devtools. Naming the returned function use... is a convention across composables to make its usage idiomatic.
@@ -359,40 +439,48 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section>
 						<h2>Exercise A</h2>
-						<ol>
-							<li>
-								Install the pinia library
-							</li>
-							<li>
-								Register pinia when creating the Vue application
-							</li>
-							<li>
-								Create your first <code>store</code> called <code>useStatsStore</code>
-							</li>
-							<li>
-								Import the <code>useStatsStore</code> in <code>AnalyticsStats.vue</code>
-							</li>
-							<li>
-								Check your Dev Tools if you can see the Pinia store
-							</li>
-						</ol>
-						<p><i>Hint: Don't add any data yet. The store should be empty. We will move the data in the next exercise.</i></p>
+						<small style="text-align: left;">
+							<ol>
+								<li>
+									Install the pinia library
+								</li>
+								<li>
+									Register pinia when creating the Vue application
+								</li>
+								<li>
+									Create your first <code>store</code> called <code>useStatisticStore</code>
+								</li>
+								<li>
+									Import the <code>useStatisticStore</code> in <code>AnalyticsStats.vue</code>
+								</li>
+								<li>
+									Check your Dev Tools if you can see the Pinia store
+								</li>
+							</ol>
+							<p><i>Hint: Don't add any data yet. The store should be empty. We will move the data in the next exercise.</i></p>
+						</small>
+					</section>
+					<section>
+						<h2>Solution A</h2>
+						Branchname: <code>A-statistics-store</code>
 					</section>
 				</section>
 				<section>
-					<section>
+					<section data-auto-animate="">
+						<h2>Concepts</h2>
+					</section>
+					<section data-auto-animate="">
 						<h2>Concepts</h2>
 						<ul>
 							<li>State</li>
 							<li>Getters</li>
 							<li>Actions</li>
-							<li><s style="opacity: 0.5;">Mutations</s></li>
 						</ul>
 					</section>
-					<section>
+					<section data-auto-animate="">
 						<h2>Concepts</h2>
 						<ul>
-							<li><strong>State</strong></li>
+							<li>State</li>
 							<li>Getters</li>
 							<li>Actions</li>
 							<li><s style="opacity: 0.5;">Mutations</s></li>
@@ -409,9 +497,17 @@ export const useCartStore = defineStore("Cart", {
 							</li>
 						</ul>
 					</section>
+					<section>
+						<h2>Store Variants</h2>
+						<p>You can chose the variant you feel the most comfortable with. In doubt, try the Options Store first.</p>
+					</section>
+					<section>
+						<h2>Store Variants</h2>
+						<p>Setup stores can bring more flexibility, but also more complexity.</p>
+					</section>
 					<section data-auto-animate>
 						<h2>State: Option Store</h2>
-						<pre><code data-trim data-line-numbers="">
+						<pre><code data-trim data-line-numbers="" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -421,11 +517,10 @@ export const useCartStore = defineStore("Cart", {
 	actions: {},
 })
 </code></pre>
-<p><small>In Pinia the state is defined as a function that returns the initial state. This allows Pinia to work in both Server and Client Side.</small></p>
 					</section>
 					<section data-auto-animate>
 						<h2>State: Option Store</h2>
-						<pre><code data-trim data-line-numbers="5">
+						<pre><code data-trim data-line-numbers="5" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -435,10 +530,11 @@ export const useCartStore = defineStore("Cart", {
 	actions: {},
 })
 </code></pre>
+<p><small>The state is defined as a function that returns the initial state. This allows Pinia to work in both Server and Client Side.</small></p>
 					</section>
 					<section data-auto-animate>
 						<h2>State: Option Store</h2>
-						<pre><code data-trim data-line-numbers="5-8">
+						<pre><code data-trim data-line-numbers="5-9" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -446,6 +542,50 @@ export const useCartStore = defineStore("Cart", {
 	state: () => {
 		return {
 			items: [],
+			shippingPrice: 0,
+		}
+	},
+	getters: {},
+	actions: {},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>State: Option Store</h2>
+						<p>TypeScript using <code>as</code></p>
+						<pre><code data-trim data-line-numbers="5-9" class="hljs javascript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [] as Item[],
+			shippingPrice: 0 as number,
+		}
+	},
+	getters: {},
+	actions: {},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>State: Option Store</h2>
+						<p>TypeScript using <code>return type</code> for <code>state</code></p>
+						<pre><code data-trim data-line-numbers="4-7,10-15" class="hljs typescript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+
+type RootState = {
+	items: Item[],
+	shippingPrice: number,
+};
+	
+export const useCartStore = defineStore("Cart", {
+	state: (): RootState => {
+		return {
+			items: [],
+			shippingPrice: 0,
 		}
 	},
 	getters: {},
@@ -455,22 +595,54 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate>
 						<h2>State: Setup Store</h2>
-						<pre><code data-trim data-line-numbers="2,6,11-13">
+						<pre><code data-trim data-line-numbers="2,6,7,12-14" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { ref } from "vue";
 import { defineStore } from "pinia";
 	
-export const useCartStore = defineStore("Cart", {
+export const useCartStore = defineStore("Cart", () => {
 	const items = ref([]);
+	const shippingPrice = ref(0);
 
 	// getters
 	// actions
 
 	return {
 		items,
+		shippingPrice,
 	}
 })
 </code></pre>
+				</section>
+					<section data-auto-animate>
+						<h2>State: Setup Store</h2>
+						<p>TypeScript</p>
+						<pre><code data-trim data-line-numbers="4,7,8" class="hljs typescript">
+// stores/useCartStore.ts
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import type { CartItem } from "@/types/CartItem"
+	
+export const useCartStore = defineStore("Cart", () => {
+	const items = ref<CartItem[]>([]); // needs a custom type
+	const shippingPrice = ref(0); // is automatically number
+
+	// getters
+	// actions
+
+	return {
+		items,
+		shippingPrice,
+	}
+})
+</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2>Accessing the state</h2>
+				</section>
+				<section data-auto-animate>
+					<h2>Accessing the state</h2>
+					<p>The following examples work for both, Options and Setup Store</p>
 				</section>
 					<section data-auto-animate>
 						<h2>Accessing the state</h2>
@@ -512,7 +684,7 @@ console.log(cartStore.items); // Pinia magic!
 </code></pre>
 				</section>
 					<section data-auto-animate>
-						<h2>Accessing the state:</h2>
+						<h2>Accessing the state</h2>
 						<code>storeToRefs</code>
 						<pre><code data-trim data-line-numbers="" class="hljs handlebars">
 <script setup>
@@ -541,6 +713,69 @@ console.log(items.value);
 </script>
 </code></pre>
 					</section>
+					<section data-auto-animate>
+						<h2>Accessing the state</h2>
+						<code>storeToRefs</code>
+						<pre><code data-trim data-line-numbers="2,6,8" class="hljs handlebars">
+<script setup>
+import { storeToRefs } from "pinia";
+import { useCartStore } from "@/stores/useCartStore";
+
+const cartStore = useCartStore();
+const { items } = storeToRefs(cartStore);
+
+console.log(items.value);
+</script>
+</code></pre>
+<p><small>Works with state and getters. Not with actions.</small></p>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing the state</h2>
+						<code>storeToRefs</code>
+						<pre><code data-trim data-line-numbers="2,6,8" class="hljs handlebars">
+<script setup>
+import { storeToRefs } from "pinia";
+import { useCartStore } from "@/stores/useCartStore";
+
+const cartStore = useCartStore();
+const { items } = storeToRefs(cartStore);
+
+console.log(items.value);
+</script>
+</code></pre>
+<p><small>Works with state and getters. Not with actions.</small></p>
+<p><small>Helpful, when you only need state and getters.</small></p>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing the state</h2>
+						<code>storeToRefs</code>
+						<pre><code data-trim data-line-numbers="5" class="hljs handlebars">
+<script setup>
+import { storeToRefs } from "pinia";
+import { useCartStore } from "@/stores/useCartStore";
+
+const { items } = storeToRefs(useCartStore());
+
+console.log(items.value);
+</script>
+</code></pre>
+					</section>
+					<section data-auto-animate data-visibility="hidden">
+						<h2>Accessing the state</h2>
+						<code>Copy</code>
+						<!-- TODO: Test if it works -->
+						<pre><code data-trim data-line-numbers="1,5" class="hljs handlebars">
+<script setup>
+import { toRef } from "vue";
+import { useCartStore } from "@/stores/useCartStore";
+
+const store = useCartStore();
+const items = toRef(store, "items");
+
+console.log(items.value);
+</script>
+</code></pre>
+					</section>
 					<section>
 						<h2>HMR Update</h2>
 						<pre><code data-trim data-line-numbers="1,4-7" class="hljs javascript">
@@ -555,23 +790,29 @@ if (import.meta.hot) {
 					</section>
 					<section>
 						<h2>Exercise B</h2>
-						<ol>
-							<li>
-								Decide for Option Store or Setup Store
-							</li>
-							<li>
-								Move the <code>stats.json</code> to the <code>state</code> of the <code>useStatsStore</code>
-							</li>
-							<li>
-								Change the <code>stats values</code> using the Vue Dev Tools
-							</li>
-							<li>
-								Bonus A: Use TypeScript to add a type to the state
-							</li>
-							<li>
-								Bonus B: Implement both versions, Option and Setup Store
-							</li>
-						</ol>
+						<small style="text-align: left;">
+							<ol>
+								<li>
+									Decide for Option Store or Setup Store
+								</li>
+								<li>
+									Move the <code>stats.json</code> to the <code>state</code> of the <code>useStatisticStore</code>
+								</li>
+								<li>
+									Change the <code>stats values</code> using the Vue Dev Tools
+								</li>
+								<li>
+									Bonus A: Use TypeScript to add a type to the state
+								</li>
+								<li>
+									Bonus B: Implement both versions, Option and Setup Store
+								</li>
+							</ol>
+						</small>
+					</section>
+					<section>
+						<h2>Solution B</h2>
+						Branchname: <code>B-statistics-state</code>
 					</section>
 				</section>
 				<section>
@@ -586,7 +827,7 @@ if (import.meta.hot) {
 					<section data-auto-animate>
 						<h2>Mutating the state</h2>
 						<ul>
-							<li><strong>Directly</strong>: <code>cartStore.items = []</code></li>
+							<li><strong>Directly</strong></li>
 							<li>Patching (Object)</li>
 							<li>Patching (Function)</li>
 						</ul>
@@ -594,44 +835,124 @@ if (import.meta.hot) {
 					<section data-auto-animate>
 						<h2>Mutating the state</h2>
 						<ul>
-							<li>Directly</li>
-							<li><strong>Patch (Object)</strong>: <br><code>cartStore.$patch({ items: [] })</code></li>
+							<li><strong>Directly</strong></li>
+							<li>Patching (Object)</li>
 							<li>Patching (Function)</li>
 						</ul>
+						<pre><code data-trim data-line-numbers class="hljs handlebars">
+							<script setup>
+								// ...
+								cartStore.items = [];
+								cartStore.shippingPrice = 0;		
+								// ...
+							</script>
+						</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Mutating the state</h2>
+						<ul>
+							<li><strong>Directly</strong></li>
+							<li>Patching (Object)</li>
+							<li>Patching (Function)</li>
+						</ul>
+						<pre><code data-trim data-line-numbers class="hljs handlebars">
+							<template>
+								<input v-model="cartStore.shippingPrice" type="number">		
+							</template>		
+						</code></pre>
 					</section>
 					<section data-auto-animate>
 						<h2>Mutating the state</h2>
 						<ul>
 							<li>Directly</li>
-							<li>Patching (Object)</li>
-							<li><strong>Patch (Function) to group updates:</strong></li>
+							<li><strong>Patch (Object)</strong></li>
+							<li>Patching (Function)</li>
+						</ul>
 						<pre><code data-trim data-line-numbers>
-cartStore.$patch((state) => {
-	state.items = [];
-	state.shippingPrice = 0;
-})					
+cartStore.$patch({ items: [], shippingPrice: 0 })				
 </code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Mutating the state</h2>
+						<ul>
+							<li>Directly</li>
+							<li><strong>Patch (Object)</strong></li>
+							<li>Patching (Function)</li>
 						</ul>
+						<pre><code data-trim data-line-numbers class="hljs javascript">
+cartStore.$patch({ items: [], shippingPrice: 0 })				
+</code></pre>
+						<p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
+					</section>
+					<section data-auto-animate>
+						<h2>Mutating the state</h2>
+						<ul>
+							<li>Directly</li>
+							<li><strong>Patch (Object)</strong></li>
+							<li>Patching (Function)</li>
+						</ul>
+						<pre><code data-trim data-line-numbers class="hljs javascript">
+cartStore.$patch({ items: [], shippingPrice: 0 })				
+</code></pre>
+						<p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
+						<p><small>The Vue Dev Tools will show the mutations as a group.</small></p>
+					</section>
+					<section data-auto-animate>
+						<h2>Mutating the state</h2>
+						<ul>
+							<li>Directly</li>
+							<li>Patching (Object)</li>
+							<li><strong>Patch (Function)</strong></li>
+						</ul>
+						<pre><code data-trim data-line-numbers>
+							cartStore.$patch((state) => {
+								state.items.push({ name: "shirt", price: 26, amount: 1 });
+								state.shippingPrice = 5;
+							})					
+							</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Mutating the state</h2>
+						<ul>
+							<li>Directly</li>
+							<li>Patching (Object)</li>
+							<li><strong>Patch (Function)</strong></li>
+						</ul>
+						<pre><code data-trim data-line-numbers>
+							cartStore.$patch((state) => {
+								state.items.push({ name: "shirt", price: 26, amount: 1 });
+								state.shippingPrice = 5;
+							})					
+							</code></pre>
+							<p><small>Sometimes, it can be hard to express a mutation in object syntax. You can pass a function instead. E.g. for pushing items to an array.</small></p>
 					</section>
 					<section data-auto-animate>
 						<h2>Mutating the state</h2>
 							<p>❌ Replacing</p>
 							<pre><code data-trim data-line-numbers>
-store.$state = { items: [] };
+cartStore.$state = { items: [] };
 </code></pre>
-						<p>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</p>
+						<p><small>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</small></p>
 					</section>
 					<section data-auto-animate>
 						<h2>Mutating the state</h2>
-						<p>❌ Replacing</p>
+							<p>❌ Replacing</p>
 							<pre><code data-trim data-line-numbers>
-store.$state = { items: [] };
+cartStore.$state = { items: [] };
 </code></pre>
 						<p><small>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</small></p>
-						<p>You can set the initial state, helpful e.g. in tests or for SSR:</small></p>
-						<pre><code data-trim data-line-numbers>
-pinia.state.value = JSON.parse(window.__pinia)			
+						<p>✅ Replacing</p>
+						<pre><code data-trim data-line-numbers class="hljs javascript">
+cartStore.$patch({ items: [] })				
 </code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Mutating the state</h2>
+						<p>Initialization</p>
+							<pre><code data-trim data-line-numbers>
+								pinia.state.value = JSON.parse(window.__pinia)		
+</code></pre>
+<p><small>You can set the initial state, helpful e.g. in tests or for SSR.</small></p>
 					</section>
 					<section>
 						<h2>Resetting the state</h2>
@@ -642,26 +963,58 @@ const cartStore = useCartStore();
 cartStore.$reset();
 </code></pre>
 					</section>
+					<section>
+						<h2>Exercise C: Mutate the state</h2>
+						<small style="text-align: left;">
+							<ol>
+								<li>Create the store <code>useColorSchemeStore</code>.</li>
+								<li>Add state variable <code>currentColorSchemeSlug</code>.</li>
+								<li>Set the default of the variable to <code>"light"</code>.</li>
+								<li>Update the variable when interacting with the radio buttons using a <code>v-model</code>.</li>
+								<li>Add or remove the CSS class <code>dark</code> on the <code>html</code> attribute depending on the value of  <code>currentColorSchemeSlug</code>.</li>
+								<li>Bonus 1: Implement alternative solution using <code>$patch</code> to update the state.</li>
+								<li>
+									Bonus 2: Sync the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
+								</li>
+							</ol>
+						</small>
+					</section>
+					<section>
+						<h2>Solution C</h2>
+						Branchname: <code>C-mutating-state</code>
+					</section>
+				</section>
+				<section>
 					<section data-auto-animate="">
 						<h2>Actions</h2>
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions</h2>
 						<ul>
-							<li>Actions are the equivalent of methods in components.</li>
+							<li>Actions are the equivalent of <code>methods</code> in components.</li>
 						</ul>
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions</h2>
 						<ul>
-							<li>Actions are the equivalent of methods in components.</li>
+							<!-- TODO: can you? -->
+							<li>Actions are the equivalent of <code>methods</code> in components.</li>
+							<li>You can call other actions of the same (and other) stores in your action.</li>
+						</ul>
+					</section>
+					<section data-auto-animate="">
+						<h2>Actions</h2>
+						<ul>
+							<li>Actions are the equivalent of <code>methods</code> in components.</li>
+							<li>You can call other actions of the same (and other) stores in your action.</li>
 							<li>They can be defined with the <code>actions</code> property in <code>defineStore()</code> in an Option Store.</li>
 						</ul>
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions</h2>
 						<ul>
-							<li>Actions are the equivalent of methods in components.</li>
+							<li>Actions are the equivalent of <code>methods</code> in components.</li>
+							<li>You can call other actions of the same (and other) stores in your action.</li>
 							<li>They can be defined with the <code>actions</code> property in <code>defineStore()</code> in an Option Store.</li>
 							<li>Or as normal functions on a Setup Store.</li>
 						</ul>
@@ -669,7 +1022,8 @@ cartStore.$reset();
 					<section data-auto-animate="">
 						<h2>Actions</h2>
 						<ul>
-							<li>Actions are the equivalent of methods in components.</li>
+							<li>Actions are the equivalent of <code>methods</code> in components.</li>
+							<li>You can call other actions of the same (and other) stores in your action.</li>
 							<li>They can be defined with the <code>actions</code> property in <code>defineStore()</code> in an Option Store.</li>
 							<li>Or as normal functions on a Setup Store.</li>
 							<li>They are <strong>perfect to define business logic</strong>.</li>
@@ -688,6 +1042,7 @@ export const useCartStore = defineStore("Cart", {
 	state: () => {
 		return {
 			items: [],
+			shippingPrice: 0,
 		}
 	},
 	actions: {
@@ -703,7 +1058,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions: Option Store</h2>
-						<pre><code data-trim data-line-numbers="11-16" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="12-17" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -711,6 +1066,7 @@ export const useCartStore = defineStore("Cart", {
 	state: () => {
 		return {
 			items: [],
+			shippingPrice: 0,
 		}
 	},
 	actions: {
@@ -726,7 +1082,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions: Option Store</h2>
-						<pre><code data-trim data-line-numbers="11-18" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="12-19" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -734,6 +1090,7 @@ export const useCartStore = defineStore("Cart", {
 	state: () => {
 		return {
 			items: [],
+			shippingPrice: 0,
 		}
 	},
 	actions: {
@@ -750,8 +1107,8 @@ export const useCartStore = defineStore("Cart", {
 </code></pre>
 					</section>
 					<section data-auto-animate="">
-						<h2>Actions: Option Store <em>Async</em></h2>
-						<pre><code data-trim data-line-numbers="11-14" class="hljs javascript">
+						<h2>Actions: Option Store <em>Patch</em></h2>
+						<pre><code data-trim data-line-numbers="12-16" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -759,6 +1116,33 @@ export const useCartStore = defineStore("Cart", {
 	state: () => {
 		return {
 			items: [],
+			shippingPrice: 0,
+		}
+	},
+	actions: {
+		addItem(item) {
+			this.$patch((state) => {
+				state.items.push(item)
+			})
+		},
+		removeItem(id) {
+			this.items = this.items.filter((item) => item.id !== id);
+		},
+	},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Actions: Option Store <em>Async</em></h2>
+						<pre><code data-trim data-line-numbers="12-15" class="hljs javascript">
+// stores/useCartStore.[js,ts]
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [],
+			shippingPrice: 0,
 		}
 	},
 	actions: {
@@ -783,12 +1167,13 @@ export const useCartStore = defineStore("Cart", {
 						<h2>Actions: Setup Store</h2>
 						<pre><code data-trim data-line-numbers="" class="hljs javascript">
 // stores/useCartStore.[js,ts]
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 	
-export const useCartStore = defineStore("Cart", {
+export const useCartStore = defineStore("Cart", () => {
 	// state
 	const items = ref([]);
+	const shippingPrice = ref(0);
 
 	// actions
 	async function loadItems() {
@@ -804,6 +1189,7 @@ export const useCartStore = defineStore("Cart", {
 
 	return {
 		items,
+		shippingPrice,
 		loadItems,
 		addItem,
 		removeItem,
@@ -811,26 +1197,128 @@ export const useCartStore = defineStore("Cart", {
 })
 </code></pre>
 					</section>
+					<section data-auto-animate>
+						<h2>Actions: Setup Store</h2>
+						<pre><code data-trim data-line-numbers="11-20,25-27" class="hljs javascript">
+// stores/useCartStore.[js,ts]
+import { ref } from "vue";
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", () => {
+	// state
+	const items = ref([]);
+	const shippingPrice = ref(0);
+
+	// actions
+	async function loadItems() {
+		const result = await fetch("/cart-endpoint");
+		this.items = await result.json();
+	}
+	function addItem(item) {
+		items.value.push(item);
+	}
+	function removeItem(id) {
+		items.value = items.value.filter((item) => item.id !== id);
+	}
+
+	return {
+		items,
+		shippingPrice,
+		loadItems,
+		addItem,
+		removeItem,
+	}
+})
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing actions</h2>
+						<!-- TODO: test if this works -->
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const cartStore = useCartStore();
+	
+	await cartStore.loadItems();
+</script>
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing actions</h2>
+						<p>Destructure <strong>without</strong> <code>storeToRefs()</code></p>
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { storeToRefs } from "pinia";
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const cartStore = useCartStore();
+	const { loadItems } = storeToRefs(cartStore); ❌
+	
+	await loadItems();
+</script>
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing actions</h2>
+						<p>Destructure <strong>without</strong> <code>storeToRefs()</code></p>
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const { loadItems } = useCartStore();
+	
+	await loadItems();
+</script>
+</code></pre>
+					</section>
 					<section>
-						<h2>Exercise C</h2>
-						<ol>
-							<li>
-								Create another store <code>useColorSchemeStore</code>
-							</li>
-							<li>
-								Import the store in the SFC <code>ColorSchemeToggle.vue</code>
-							</li>
-							<li>
-								Use <code>state</code> and <code>actions</code> to toggle the color scheme.
-							</li>
-							<li>Bonus 1: Implement alternative solution using <code>$patch</code> to update the state.</li>
-							<li>
-								Bonus 2: Sync the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
-							</li>
+						Q: When to use <code>actions</code> vs. <code>direct mutation</code>?
+					</section>
+					<section>
+						<h2>Exercise D</h2>
+						<ol style="font-size: 2rem;">
+							<li>Create the store <code>useTodoListStore</code></li>
+							<li>Import the store in <code>TodoList.vue</code></li>
+							<li>Move the state of <code>@/data/todoItems.json</code> into the store and use the state in the Component</li>
+							<li>Create action(s) to change the <strong>completeness</strong> state of an item.</li>
+							<li>Create action(s) to change the <strong>archived</strong> state of an item.</li>
+							<li>Create an action to <strong>add</strong> a new item.</li>
+							<li>Hint You can use <code>this.todoItems.length + 1</code> as ID for added items</li>
 						</ol>
+					</section>
+					<section>
+						<h2>Exercise D</h2>
+						<strong>Bonus:</strong>
+						<ol style="font-size: 2rem;">
+							<li>Create an action in <code>useColorSchemeStore</code> to update the state variable. This replaces the direct mutation using the <code>v-model</code></li>
+							<li>Update the LocalStorage in the store action.</li>
+							<li>Call the action in the component.</li>
+							<li>Hint: It might be useful <strong>copy</strong> the store variable <code>currentColorSchemeslug</code> first.</li>
+						</ol>
+					</section>
+					<section>
+						<h2>Solution D</h2>
+						Branchname: <code>D-state-actions</code>
 					</section>
 				</section>
 				<section>
+					<section data-auto-animate="">
+						<h2>Getters</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters</h2>
+						<ul>
+							<li>Getters are the equivalent of <code>computed properties</code>.</li>
+						</ul>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters</h2>
+						<ul>
+							<li>Getters are the equivalent of <code>computed properties</code>.</li>
+							<li>Pinia caches the value as long as it does not change.</li>
+						</ul>
+					</section>
 					<section data-auto-animate="">
 						<h2>Getters: Option Store</h2>
 					</section>
@@ -850,6 +1338,35 @@ export const useCartStore = defineStore("Cart", {
 	getters: {
     totalPrice: (state) =>
       state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+	},
+	actions: {
+		addItem(item) {
+			this.items.push(item);
+		},
+		removeItem(id) {
+			this.items = this.items.filter((item) => item.id !== id);
+		},
+	},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<pre><code data-trim data-line-numbers="12-14">
+// stores/useCartStore.[js,ts]
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [],
+			shippingPrice: 0,
+		}
+	},
+	getters: {
+    totalPrice(state) {
+      return state.items.reduce((acc, item) => item.quantity * item.price + acc, 0);
+		},
 	},
 	actions: {
 		addItem(item) {
@@ -1014,7 +1531,49 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Getters: Option Store</h2>
-						<p>Using getters in getters: TypeScript</p>
+						<p>Using getters with parameters</p>
+						<pre><code data-trim data-line-numbers="25-26" class="hljs javascript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+
+type Item = {
+	id: number;
+  quantity: number;
+  price: number;
+};
+
+type RootState = {
+  items: Item[];
+  shippingPrice: number;
+};
+
+export const useCartStore = defineStore("Cart", {
+  state: (): RootState => {
+    return {
+			items: [],
+			shippingPrice: 0,
+    };
+  },
+  getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+		// This syntax wil also work, but your IDE will mark it as an error:
+    totalPriceWithShipping: (state) => state.totalPrice + state.shippingPrice,
+  },
+  actions: {
+    addItem(item: Item) {
+      this.items.push(item);
+    },
+    removeItem(id: Item["id"]) {
+      this.items = this.items.filter((item) => item.id !== id);
+    },
+  },
+});
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters with parameters</p>
 						<pre><code data-trim data-line-numbers="28" class="hljs javascript">
 // stores/useCartStore.ts
 import { defineStore } from "pinia";
@@ -1056,50 +1615,9 @@ export const useCartStore = defineStore("Cart", {
 });
 </code></pre>
 					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<p>Using getters in getters: TypeScript</p>
-						<pre><code data-trim data-line-numbers="28" class="hljs javascript">
-// stores/useCartStore.ts
-import { defineStore } from "pinia";
-
-type Item = {
-	id: number;
-  quantity: number;
-  price: number;
-};
-
-type RootState = {
-  items: Item[];
-  shippingPrice: number;
-};
-
-export const useCartStore = defineStore("Cart", {
-  state: (): RootState => {
-    return {
-			items: [],
-			shippingPrice: 0,
-    };
-  },
-  getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-    totalPriceWithShipping(state): number {
-      return this.totalPrice + state.shippingPrice;
-    },
-		getItem: (state) {
-			return (id) => state.items.find((item) => item.id === id);
-  },
-  actions: {
-    addItem(item: Item) {
-      this.items.push(item);
-    },
-    removeItem(id: Item["id"]) {
-      this.items = this.items.filter((item) => item.id !== id);
-    },
-  },
-});
-</code></pre>
+					<section>
+						<h2>Using getters with parameters</h2>
+						<p>Note that when doing this, getters are not cached anymore, they are simply functions that you invoke.</p>
 					</section>
 					<section data-auto-animate>
 						<h2>Getters: Setup Store</h2>
@@ -1108,7 +1626,7 @@ export const useCartStore = defineStore("Cart", {
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 	
-export const useCartStore = defineStore("Cart", {
+export const useCartStore = defineStore("Cart", () => {
 	// state
 	const items = ref([]);
 	const shippingPrice = ref(0);
@@ -1116,8 +1634,13 @@ export const useCartStore = defineStore("Cart", {
 	// getters
 	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
 	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+	const getItem = (id) => items.value.find((item) => item.id === id)
 
 	// actions
+	async function loadItems() {
+		const result = await fetch("/cart-endpoint");
+		this.items = await result.json();
+	}
 	function addItem(item) {
 		items.value.push(item);
 	}
@@ -1129,6 +1652,8 @@ export const useCartStore = defineStore("Cart", {
 		items,
 		totalPrice,
 		totalPriceWithShipping,
+		getItem,
+		loadItems,
 		addItem,
 		removeItem,
 	}
@@ -1137,12 +1662,12 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate>
 						<h2>Getters: Setup Store</h2>
-						<pre><code data-trim data-line-numbers="11,12,24,25" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="11,12,13,25-27" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 	
-export const useCartStore = defineStore("Cart", {
+export const useCartStore = defineStore("Cart", () => {
 	// state
 	const items = ref([]);
 	const shippingPrice = ref(0);
@@ -1150,8 +1675,13 @@ export const useCartStore = defineStore("Cart", {
 	// getters
 	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
 	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+	const getItem = (id) => items.value.find((item) => item.id === id)
 
 	// actions
+	async function loadItems() {
+		const result = await fetch("/cart-endpoint");
+		this.items = await result.json();
+	}
 	function addItem(item) {
 		items.value.push(item);
 	}
@@ -1163,6 +1693,8 @@ export const useCartStore = defineStore("Cart", {
 		items,
 		totalPrice,
 		totalPriceWithShipping,
+		getItem,
+		loadItems,
 		addItem,
 		removeItem,
 	}
@@ -1171,24 +1703,130 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate>
 						<h2>Accessing getters</h2>
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const cartStore = useCartStore();
+	console.log(cartStore.totalPrice);
+	console.log(cartStore.totalPriceWithShipping);
+</script>
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing getters</h2>
+						<!-- TODO Check this -->
+						<p>Destructure with <code>storeToRefs</code> will make getters reactive again</p>
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { storeToRefs } from "pinia";
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const cartStore = useCartStore();
+	const { totalPrice, totalPriceWithShipping } = storeToRefs(cartStore);
+
+	console.log(totalPrice.value);
+	console.log(totalPriceWithShipping.value);
+</script>
+</code></pre>
 					</section>
 					<section>
-						<!-- TODO: Getters -->
-						<h2>Exercise D</h2>
+						Q: When to use <code>getters</code> instead of the <code>state</code>?
+					</section>
+					<section>
+						Q: When to use <code>getters</code> vs. <code>computed props</code>?
+					</section>
+					<section>
+						<h2>Exercise E: Getters</h2>
 						<ol>
 							<li>
-								Getters
+								Move the <code>computed properties</code> of <code>TodoList.vue</code> into the store as <code>getters</code>.
 							</li>
+							<li>
+								Create a getter which returns the amount of active, but incomplete items.
+							</li>
+							<li>
+								Import the store now also in <code>SideNavigation.vue</code>.
+							</li>
+							<li>
+								Replace the hardcoded number next to "TodoList" of <code>SideNavigation.vue</code> with the getter.
+							</li>
+							<li>Challenge: Use a nested getter for the count of active, but incomplete items.</li>
 						</ol>
+					</section>
+					<section>
+						<h2>Solution E</h2>
+						Branchname: <code>exercises/E</code>
 					</section>
 				</section>
 				<section>
-					<h2>Dev Tools</h2>
-				</section>
-				<section>
-					<section>
+					<section data-auto-animate="">
 						<h2>Composing Stores</h2>
-						<pre><code data-trim data-line-numbers="5-7">
+					</section>
+					<section data-auto-animate="">
+						<h2>Composing Stores</h2>
+						<pre><code data-trim data-line-numbers="5">
+// stores/useColorSchemeStore.[js,ts]
+export const useColorSchemeStore = defineStore("ColorScheme", {
+	state: (): RootState => {
+		return {
+			currentColorSchemeSlug: useStorage(storageKey, "light"),
+		};
+	},
+});
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Composing Stores: Options Store</h2>
+						<pre><code data-trim data-line-numbers="4,32-39">
+// stores/useCartStore.[js,ts]
+import { defineStore } from "pinia";
+
+const user = useUserStore();
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [],
+			shippingPrice: 0,
+		}
+	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
+  },
+	actions: {
+		async loadItems() {
+			const result = await fetch("/cart-endpoint");
+			this.items = await result.json();
+		},
+		addItem(item) {
+			this.items.push(item);
+		},
+		removeItem(id) {
+			this.items = this.items.filter((item) => item.id !== id);
+		},
+		async purchaseItems() {
+      if (!user.name) return;
+
+      const numOfItems = this.items.length;
+      this.items = [];
+
+      return numOfItems;
+    }
+	},
+})
+</code></pre>
+<!-- TODO -->
+<p>Error in IDE Screenshot</p>
+					</section>
+					<section data-auto-animate="">
+						<h2>Composing Stores: Options Store</h2>
+						<pre><code data-trim data-line-numbers="30-38">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -1196,10 +1834,22 @@ export const useCartStore = defineStore("Cart", {
 	state: () => {
 		return {
 			items: [],
+			shippingPrice: 0,
 		}
 	},
-	getters: {},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
+  },
 	actions: {
+		async loadItems() {
+			const result = await fetch("/cart-endpoint");
+			this.items = await result.json();
+		},
 		addItem(item) {
 			this.items.push(item);
 		},
@@ -1210,53 +1860,148 @@ export const useCartStore = defineStore("Cart", {
       const user = useUserStore();
       if (!user.name) return;
 
-      console.log("Purchasing", this.items);
-      const n = this.items.length;
-      this.rawItems = [];
+      const numOfItems = this.items.length;
+      this.items = [];
 
-      return n;
+      return numOfItems;
     }
 	},
 })
 </code></pre>
 					</section>
-					<section>
-						<h2>Setup Store Example</h2>
+					<section data-auto-animate="">
+						<h2>Composing Stores: Setup Store</h2>
+						<pre><code data-trim data-line-numbers="26-34,44" class="hljs javascript">
+	// stores/useCartStore.[js,ts]
+	import { computed, ref } from "vue";
+	import { defineStore } from "pinia";
+		
+	export const useCartStore = defineStore("Cart", () => {
+		// state
+		const items = ref([]);
+		const shippingPrice = ref(0);
+	
+		// getters
+		const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
+		const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+		const getItem = (id) => items.value.find((item) => item.id === id)
+	
+		// actions
+		async function loadItems() {
+			const result = await fetch("/cart-endpoint");
+			this.items = await result.json();
+		}
+		function addItem(item) {
+			items.value.push(item);
+		}
+		function removeItem(id) {
+			items.value = items.value.filter((item) => item.id !== id);
+		}
+		async function purchaseItems() {
+			const user = useUserStore();
+      if (!user.name) return;
+
+      const numOfItems = this.items.length;
+      this.items = [];
+
+      return numOfItems;
+		}
+	
+		return {
+			items,
+			totalPrice,
+			totalPriceWithShipping,
+			getItem,
+			loadItems,
+			addItem,
+			removeItem,
+			purchaseItems,
+		}
+	})
+	</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Composing Stores: Setup Store</h2>
+						<pre><code data-trim data-line-numbers="6,28-35,45" class="hljs javascript">
+	// stores/useCartStore.[js,ts]
+	import { computed, ref } from "vue";
+	import { defineStore } from "pinia";
+		
+	export const useCartStore = defineStore("Cart", () => {
+		const user = useUserStore();
+
+		// state
+		const items = ref([]);
+		const shippingPrice = ref(0);
+	
+		// getters
+		const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
+		const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+		const getItem = (id) => items.value.find((item) => item.id === id)
+	
+		// actions
+		async function loadItems() {
+			const result = await fetch("/cart-endpoint");
+			this.items = await result.json();
+		}
+		function addItem(item) {
+			items.value.push(item);
+		}
+		function removeItem(id) {
+			items.value = items.value.filter((item) => item.id !== id);
+		}
+		async function purchaseItems() {
+      if (!user.name) return;
+
+      const numOfItems = this.items.length;
+      this.items = [];
+
+      return numOfItems;
+		}
+	
+		return {
+			items,
+			totalPrice,
+			totalPriceWithShipping,
+			getItem,
+			loadItems,
+			addItem,
+			removeItem,
+			purchaseItems,
+		}
+	})
+	</code></pre>
 					</section>
 					<section>
-						<h2>Exercise</h2>
-						<ul>
+						<h2>Circular dependencies</h2>
+						<p>https://pinia.vuejs.org/cookbook/composing-stores.html</p>
+					</section>
+					<section>
+						<!-- TODO: Composing -->
+						<h2>Exercise F</h2>
+						<ol>
 							<li>
-								Migrate your <code>main</code> store to a setup store
+								Call stats store action in todo items store
 							</li>
-						</ul>
+						</ol>
+					</section>
+					<section>
+						<h2>Solution E</h2>
+						Branchname: <code>F-composing-stores</code>
+					</section>
+				</section>
+				<section data-visibility="hidden">
+					<section data-auto-animate="">
+						<h2>Migrate from Vuex to Pinia</h2>
 					</section>
 				</section>
 				<section>
-					<h2>Vote!</h2>
-					<p>What's next? Pinia testing or Vuex migration?</p>
-					<p>Random question quiz tool online</p>
-				</section>
-				<section>
-					<h2>Pinia testing</h2>
+					<section>
+						<h2>Pinia testing</h2>
+					</section>
 				</section>
 				<section>
 					<h2>Migrate from Vuex to Pinia</h2>
-				</section>
-				<section>
-					<section>
-						<h2>Vuex vs. Pinia</h2>
-					</section>
-					<section>
-						<h2>Flux-Pattern and Migrations</h2>
-					</section>
-				</section>
-				<section>
-					<h2>Alternatives</h2>
-					<ul>
-						<li>No lib</li>
-						<li><a href="https://harlemjs.com/" rel="noopener">Harlem.js</a></li>
-					</ul>
 				</section>
 			</div>
 		</div>
