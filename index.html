@@ -17,6 +17,25 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
+					<h2>Slides & Code-Base</h2>
+					<p><a href="https://vannsl.github.io/pinia-workshop-slides/" target="_blank" rel="noopener">Slides</a></p>
+					<p><a href="https://github.com/Vannsl/pinia-workshop" target="_blank" rel="noopener">Codebase</a></p>
+					<ul>
+						<ul>
+							<li>git@github.com:Vannsl/pinia-workshop.git</li>
+						</ul></li>
+						<li>Codebase setup ✅</li>
+						</ul>
+						<pre><code>$ npm install
+$ yarn install
+$ pnpm install
+
+$ npm run dev
+$ yarn run dev
+$ pnpm run dev
+</code></pre>
+				</section>
+				<section>
 					<h2>🍍 Pinia 🍍</h2>
 					<h2>State Management in Vue</h2>
 				</section>
@@ -45,6 +64,16 @@
 				</section>
 				<section>
 					<section>
+						<h2>One-day Workshop</h2>
+						<ul>
+							<li>9am 👩‍💻</li>
+							<li>10:30 - 11:00 ☕️</li>
+							<li>12:30 - 14:00 🥗</li>
+							<li>15:30 - 16:00 ☕️</li>
+							<li>17:00 - 17:30 👋</li>
+						</ul>
+					</section>
+					<section>
 						<h2>About today</h2>
 						<ul>
 							<li>Learn about the local and global state management</li>
@@ -53,15 +82,6 @@
 							<li>Learn when to use Pinia, Vuex, or no library</li>
 							<li>Learn how to use Dev Tools and TypeScript with Pinia</li>
 							<li>Answering frequently asked questions about Pinia</li>
-						</ul>
-					</section>
-					<section>
-						<h2>One-day Workshop</h2>
-						<ul>
-							<li>9am Welcome</li>
-							<li>12pm Lunch break</li>
-							<li>3pm Coffee break</li>
-							<li>4pm Closing</li>
 						</ul>
 					</section>
 					<section>
@@ -83,8 +103,8 @@
 							<li>Create, access, and mutate state</li>
 							<li>Use Actions and Getters</li>
 							<li>Composing stores</li>
-							<li>Subscribing to changes</li>
-							<li>Migrating from Vuex to Pinia</li>
+							<li style="display:none;">Migrating from Vuex to Pinia</li>
+							<li style="display:none;">Subscribing to changes</li>
 							<li style="display:none;">Testing stores</li>
 						</ul>
 					</section>
@@ -438,7 +458,7 @@ export const useCartStore = defineStore("Cart", {
 						</small></p>
 					</section>
 					<section>
-						<h2>Exercise A</h2>
+						<h2>Exercise A: Install pinia</h2>
 						<small style="text-align: left;">
 							<ol>
 								<li>
@@ -450,11 +470,13 @@ export const useCartStore = defineStore("Cart", {
 								<li>
 									Create your first <code>store</code> called <code>useStatisticStore</code>
 								</li>
+								<li>Create a second <store>store</store> called <code>useTodoListStore</code></li>
 								<li>
 									Import the <code>useStatisticStore</code> in <code>AnalyticsStats.vue</code>
 								</li>
+								<li>Import the <code>useTodoListStore</code> in <code>TodoList.vue</code></li>
 								<li>
-									Check your Dev Tools if you can see the Pinia store
+									Check your Dev Tools if you can see the Pinia stores
 								</li>
 							</ol>
 							<p><i>Hint: Don't add any data yet. The store should be empty. We will move the data in the next exercise.</i></p>
@@ -789,23 +811,28 @@ if (import.meta.hot) {
 </code></pre>
 					</section>
 					<section>
-						<h2>Exercise B</h2>
+						<h2>Exercise B: Creating State</h2>
 						<small style="text-align: left;">
 							<ol>
 								<li>
 									Decide for Option Store or Setup Store
 								</li>
 								<li>
-									Move the <code>stats.json</code> to the <code>state</code> of the <code>useStatisticStore</code>
+									Move the <code>@/data/stats.json</code> from <code>AnalyticsStats.vue</code> to the <code>state</code> of the <code>useStatisticStore</code>
+								</li>
+								<li>
+									Use the store state in <code></code>
+								</li>
+								<li>Move the state of <code>@/data/todoItems.json</code> from <code></code>to the <code>state</code> of the <code>useTodoListStore</code>
 								</li>
 								<li>
 									Change the <code>stats values</code> using the Vue Dev Tools
 								</li>
 								<li>
-									Bonus A: Use TypeScript to add a type to the state
+									Use the store state in <code>TodoList.vue</code>
 								</li>
 								<li>
-									Bonus B: Implement both versions, Option and Setup Store
+									Bonus A: Implement both versions, Option and Setup Store
 								</li>
 							</ol>
 						</small>
@@ -991,6 +1018,10 @@ cartStore.$subscribe((mutation, state) => {
 </code></pre>
 					</section>
 					<section data-auto-animate>
+						<h2>Subscribing to the state</h2>
+						<p>You can call <code>$subscribe</code> in the <code>setup</code> function of Vue. It automatically gets removed when the component is <code>unmounted</code>.</p>
+					</section>
+					<section data-auto-animate>
 						<h2>Subscribing vs. watch 🤔</h2>
 					</section>
 					<section data-auto-animate>
@@ -1010,7 +1041,7 @@ cartStore.$reset();
 </code></pre>
 					</section>
 					<section>
-						<h2>Exercise C: Mutate the state</h2>
+						<h2>Exercise C: Mutating state</h2>
 						<small style="text-align: left;">
 							<ol>
 								<li>Create the store <code>useColorSchemeStore</code>.</li>
@@ -1028,6 +1059,373 @@ cartStore.$reset();
 					<section>
 						<h2>Solution C</h2>
 						Branchname: <code>C-mutating-state</code>
+					</section>
+				</section>
+
+				<section>
+					<section data-auto-animate="">
+						<h2>Getters</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters</h2>
+						<ul>
+							<li>Getters are the equivalent of <code>computed properties</code>.</li>
+						</ul>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters</h2>
+						<ul>
+							<li>Getters are the equivalent of <code>computed properties</code>.</li>
+							<li>Pinia caches the value as long as it does not change.</li>
+						</ul>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<pre><code data-trim data-line-numbers="">
+// stores/useCartStore.[js,ts] 
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [],
+			shippingPrice: 0,
+		}
+	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+	},
+	actions: {},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<pre><code data-trim data-line-numbers="12-14">
+// stores/useCartStore.[js,ts]
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [],
+			shippingPrice: 0,
+		}
+	},
+	getters: {
+    totalPrice(state) {
+      return state.items.reduce((acc, item) => item.quantity * item.price + acc, 0);
+		},
+	},
+	actions: {},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<pre><code data-trim data-line-numbers="12-13">
+// stores/useCartStore.[js,ts]
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", {
+	state: () => {
+		return {
+			items: [],
+			shippingPrice: 0,
+		}
+	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+	},
+	actions: {},
+})
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters in getters: JavaScript</p>
+						<pre><code data-trim data-line-numbers="12-17">
+// stores/useCartStore.js
+import { defineStore } from "pinia";
+
+export const useCartStore = defineStore("Cart", {
+  state: () => {
+    return {
+			items: [],
+			shippingPrice: 0,
+    };
+  },
+  getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+		// as in actions, don't use arrow function to access `this`
+    totalPriceWithShipping() {
+      return this.totalPrice + this.shippingPrice;
+    },
+  },
+  actions: {},
+});
+
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters in getters: TypeScript</p>
+						<pre><code data-trim data-line-numbers="25-28" class="hljs javascript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+
+type Item = {
+	id: number;
+  quantity: number;
+  price: number;
+};
+
+type RootState = {
+  items: Item[];
+  shippingPrice: number;
+};
+
+export const useCartStore = defineStore("Cart", {
+  state: (): RootState => {
+    return {
+			items: [],
+			shippingPrice: 0,
+    };
+  },
+  getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+		// Add return value in TypeScript
+    totalPriceWithShipping(): number {
+      return this.totalPrice + this.shippingPrice;
+    },
+  },
+  actions: {},
+});
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters in getters: TypeScript</p>
+						<pre><code data-trim data-line-numbers="25-28" class="hljs javascript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+
+type Item = {
+	id: number;
+  quantity: number;
+  price: number;
+};
+
+type RootState = {
+  items: Item[];
+  shippingPrice: number;
+};
+
+export const useCartStore = defineStore("Cart", {
+  state: (): RootState => {
+    return {
+			items: [],
+			shippingPrice: 0,
+    };
+  },
+  getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+		// Getter function can still accept `state`
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+  },
+  actions: {},
+});
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters with parameters</p>
+						<pre><code data-trim data-line-numbers="25-26" class="hljs javascript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+
+type Item = {
+	id: number;
+  quantity: number;
+  price: number;
+};
+
+type RootState = {
+  items: Item[];
+  shippingPrice: number;
+};
+
+export const useCartStore = defineStore("Cart", {
+  state: (): RootState => {
+    return {
+			items: [],
+			shippingPrice: 0,
+    };
+  },
+  getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+		// This syntax wil also work, but your IDE will mark it as an error:
+    totalPriceWithShipping: (state) => state.totalPrice + state.shippingPrice,
+  },
+  actions: {},
+});
+</code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters with parameters</p>
+						<pre><code data-trim data-line-numbers="28" class="hljs javascript">
+// stores/useCartStore.ts
+import { defineStore } from "pinia";
+
+type Item = {
+	id: number;
+  quantity: number;
+  price: number;
+};
+
+type RootState = {
+  items: Item[];
+  shippingPrice: number;
+};
+
+export const useCartStore = defineStore("Cart", {
+  state: (): RootState => {
+    return {
+			items: [],
+			shippingPrice: 0,
+    };
+  },
+  getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
+  },
+  actions: {},
+});
+</code></pre>
+					</section>
+					<section>
+						<h2>Using getters with parameters</h2>
+						<p>Note that when doing this, getters are not cached anymore, they are simply functions that you invoke.</p>
+					</section>
+					<section data-auto-animate>
+						<h2>Getters: Setup Store</h2>
+						<pre><code data-trim data-line-numbers="" class="hljs javascript">
+// stores/useCartStore.[js,ts]
+import { computed, ref } from "vue";
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", () => {
+	// state
+	const items = ref([]);
+	const shippingPrice = ref(0);
+
+	// getters
+	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
+	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+	const getItem = (id) => items.value.find((item) => item.id === id);
+
+	return {
+		items,
+		totalPrice,
+		totalPriceWithShipping,
+		getItem,
+	}
+})
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Getters: Setup Store</h2>
+						<!-- TODO: Update numbers-->
+						<pre><code data-trim data-line-numbers="11,12,13,25-27" class="hljs javascript">
+// stores/useCartStore.[js,ts]
+import { computed, ref } from "vue";
+import { defineStore } from "pinia";
+	
+export const useCartStore = defineStore("Cart", () => {
+	// state
+	const items = ref([]);
+	const shippingPrice = ref(0);
+
+	// getters
+	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
+	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+	const getItem = (id) => items.value.find((item) => item.id === id)
+
+	return {
+		items,
+		totalPrice,
+		totalPriceWithShipping,
+		getItem,
+	}
+})
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing getters</h2>
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const cartStore = useCartStore();
+	console.log(cartStore.totalPrice);
+	console.log(cartStore.totalPriceWithShipping);
+</script>
+</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Accessing getters</h2>
+						<!-- TODO Check this -->
+						<p>Destructure with <code>storeToRefs</code> will make getters reactive again</p>
+						<pre><code data-trim data-line-numbers="" class="hljs">
+<script setup>
+	import { storeToRefs } from "pinia";
+	import { useCartStore } from "@/stores/useCartStore.js";
+
+	const cartStore = useCartStore();
+	const { totalPrice, totalPriceWithShipping } = storeToRefs(cartStore);
+
+	console.log(totalPrice.value);
+	console.log(totalPriceWithShipping.value);
+</script>
+</code></pre>
+					</section>
+					<section>
+						<h2>Exercise D: Getters</h2>
+						<ol>
+							<li>
+								Move the <code>computed properties</code> of <code>TodoList.vue</code> into the store as <code>getters</code>.
+							</li>
+							<li>
+								Create a getter which returns the amount of active, but incomplete items.
+							</li>
+							<li>
+								Import the store in <code>SideNavigation.vue</code>.
+							</li>
+							<li>
+								Replace the hardcoded number next to "TodoList" of <code>SideNavigation.vue</code> with the getter.
+							</li>
+							<li>Challenge: Use a nested getter for the count of active, but incomplete items.</li>
+						</ol>
+					</section>
+					<section>
+						<h2>Solution D</h2>
+						Branchname: <code>D-getters</code>
 					</section>
 				</section>
 				<section>
@@ -1091,6 +1489,14 @@ export const useCartStore = defineStore("Cart", {
 			shippingPrice: 0,
 		}
 	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
+	},
 	actions: {
 		addItem(item) {
 			this.items.push(item);
@@ -1104,6 +1510,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions: Option Store</h2>
+						<!-- TODO: Update numbers-->
 						<pre><code data-trim data-line-numbers="12-17" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
@@ -1115,6 +1522,14 @@ export const useCartStore = defineStore("Cart", {
 			shippingPrice: 0,
 		}
 	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
+	},
 	actions: {
 		addItem(item) {
 			this.items.push(item);
@@ -1128,6 +1543,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions: Option Store</h2>
+						<!-- TODO: Update numbers-->
 						<pre><code data-trim data-line-numbers="12-19" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
@@ -1138,6 +1554,14 @@ export const useCartStore = defineStore("Cart", {
 			items: [],
 			shippingPrice: 0,
 		}
+	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
 	},
 	actions: {
 		// ❌ No access to `this` using arrow functions:
@@ -1153,6 +1577,7 @@ export const useCartStore = defineStore("Cart", {
 </code></pre>
 					</section>
 					<section data-auto-animate="">
+						<!-- TODO: Update numbers-->
 						<h2>Actions: Option Store <em>Patch</em></h2>
 						<pre><code data-trim data-line-numbers="12-16" class="hljs javascript">
 // stores/useCartStore.[js,ts]
@@ -1164,6 +1589,14 @@ export const useCartStore = defineStore("Cart", {
 			items: [],
 			shippingPrice: 0,
 		}
+	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
 	},
 	actions: {
 		addItem(item) {
@@ -1179,6 +1612,7 @@ export const useCartStore = defineStore("Cart", {
 </code></pre>
 					</section>
 					<section data-auto-animate="">
+						<!-- TODO: Update numbers-->
 						<h2>Actions: Option Store <em>Async</em></h2>
 						<pre><code data-trim data-line-numbers="12-15" class="hljs javascript">
 // stores/useCartStore.[js,ts]
@@ -1190,6 +1624,14 @@ export const useCartStore = defineStore("Cart", {
 			items: [],
 			shippingPrice: 0,
 		}
+	},
+	getters: {
+    totalPrice: (state) =>
+      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
+    totalPriceWithShipping(state): number {
+      return this.totalPrice + state.shippingPrice;
+    },
+		getItem: (state) => (id) => state.items.find((item) => item.id === id);
 	},
 	actions: {
 		async loadItems() {
@@ -1221,6 +1663,11 @@ export const useCartStore = defineStore("Cart", () => {
 	const items = ref([]);
 	const shippingPrice = ref(0);
 
+	// getters
+	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
+	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+	const getItem = (id) => items.value.find((item) => item.id === id);
+
 	// actions
 	async function loadItems() {
 		const result = await fetch("/cart-endpoint");
@@ -1236,6 +1683,9 @@ export const useCartStore = defineStore("Cart", () => {
 	return {
 		items,
 		shippingPrice,
+		totalPrice,
+		totalPriceWithShipping,
+		getItem,
 		loadItems,
 		addItem,
 		removeItem,
@@ -1245,6 +1695,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section data-auto-animate>
 						<h2>Actions: Setup Store</h2>
+						<!-- TODO: Update number-->
 						<pre><code data-trim data-line-numbers="11-20,25-27" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { ref } from "vue";
@@ -1255,6 +1706,11 @@ export const useCartStore = defineStore("Cart", () => {
 	const items = ref([]);
 	const shippingPrice = ref(0);
 
+	// getters
+	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
+	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
+	const getItem = (id) => items.value.find((item) => item.id === id);
+
 	// actions
 	async function loadItems() {
 		const result = await fetch("/cart-endpoint");
@@ -1270,11 +1726,14 @@ export const useCartStore = defineStore("Cart", () => {
 	return {
 		items,
 		shippingPrice,
+		totalPrice,
+		totalPriceWithShipping,
+		getItem,
 		loadItems,
 		addItem,
 		removeItem,
 	}
-})
+});
 </code></pre>
 					</section>
 					<section data-auto-animate>
@@ -1319,22 +1778,16 @@ export const useCartStore = defineStore("Cart", () => {
 </code></pre>
 					</section>
 					<section>
-						Q: When to use <code>actions</code> vs. <code>direct mutation</code>?
-					</section>
-					<section>
-						<h2>Exercise D</h2>
+						<h2>Exercise E: Actions</h2>
 						<ol style="font-size: 2rem;">
-							<li>Create the store <code>useTodoListStore</code></li>
-							<li>Import the store in <code>TodoList.vue</code></li>
-							<li>Move the state of <code>@/data/todoItems.json</code> into the store and use the state in the Component</li>
 							<li>Create action(s) to change the <strong>completeness</strong> state of an item.</li>
 							<li>Create action(s) to change the <strong>archived</strong> state of an item.</li>
 							<li>Create an action to <strong>add</strong> a new item.</li>
-							<li>Hint You can use <code>this.todoItems.length + 1</code> as ID for added items</li>
+							<li>Hint: You can move the function <code>createNewTodoItem()</code>... <code>this.todoItems.length + 1</code> as ID for added items</li>
 						</ol>
 					</section>
-					<section>
-						<h2>Exercise D</h2>
+					<section data-visibility="hidden">
+						<h2>Exercise E</h2>
 						<strong>Bonus:</strong>
 						<ol style="font-size: 2rem;">
 							<li>Create an action in <code>useColorSchemeStore</code> to update the state variable. This replaces the direct mutation using the <code>v-model</code></li>
@@ -1344,470 +1797,18 @@ export const useCartStore = defineStore("Cart", () => {
 						</ol>
 					</section>
 					<section>
-						<h2>Solution D</h2>
-						Branchname: <code>D-state-actions</code>
-					</section>
-				</section>
-				<section>
-					<section data-auto-animate="">
-						<h2>Getters</h2>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters</h2>
-						<ul>
-							<li>Getters are the equivalent of <code>computed properties</code>.</li>
-						</ul>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters</h2>
-						<ul>
-							<li>Getters are the equivalent of <code>computed properties</code>.</li>
-							<li>Pinia caches the value as long as it does not change.</li>
-						</ul>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<pre><code data-trim data-line-numbers="">
-// stores/useCartStore.[js,ts] 
-import { defineStore } from "pinia";
-	
-export const useCartStore = defineStore("Cart", {
-	state: () => {
-		return {
-			items: [],
-			shippingPrice: 0,
-		}
-	},
-	getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-	},
-	actions: {
-		addItem(item) {
-			this.items.push(item);
-		},
-		removeItem(id) {
-			this.items = this.items.filter((item) => item.id !== id);
-		},
-	},
-})
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<pre><code data-trim data-line-numbers="12-14">
-// stores/useCartStore.[js,ts]
-import { defineStore } from "pinia";
-	
-export const useCartStore = defineStore("Cart", {
-	state: () => {
-		return {
-			items: [],
-			shippingPrice: 0,
-		}
-	},
-	getters: {
-    totalPrice(state) {
-      return state.items.reduce((acc, item) => item.quantity * item.price + acc, 0);
-		},
-	},
-	actions: {
-		addItem(item) {
-			this.items.push(item);
-		},
-		removeItem(id) {
-			this.items = this.items.filter((item) => item.id !== id);
-		},
-	},
-})
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<pre><code data-trim data-line-numbers="12-13">
-// stores/useCartStore.[js,ts]
-import { defineStore } from "pinia";
-	
-export const useCartStore = defineStore("Cart", {
-	state: () => {
-		return {
-			items: [],
-			shippingPrice: 0,
-		}
-	},
-	getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-	},
-	actions: {
-		addItem(item) {
-			this.items.push(item);
-		},
-		removeItem(id) {
-			this.items = this.items.filter((item) => item.id !== id);
-		},
-	},
-})
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<p>Using getters in getters: JavaScript</p>
-						<pre><code data-trim data-line-numbers="12-17">
-// stores/useCartStore.js
-import { defineStore } from "pinia";
-
-export const useCartStore = defineStore("Cart", {
-  state: () => {
-    return {
-			items: [],
-			shippingPrice: 0,
-    };
-  },
-  getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-		// as in actions, don't use arrow function to access `this`
-    totalPriceWithShipping() {
-      return this.totalPrice + this.shippingPrice;
-    },
-  },
-  actions: {
-    addItem(item) {
-      this.items.push(item);
-    },
-    removeItem(id) {
-      this.items = this.items.filter((item) => item.id !== id);
-    },
-  },
-});
-
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<p>Using getters in getters: TypeScript</p>
-						<pre><code data-trim data-line-numbers="25-28" class="hljs javascript">
-// stores/useCartStore.ts
-import { defineStore } from "pinia";
-
-type Item = {
-	id: number;
-  quantity: number;
-  price: number;
-};
-
-type RootState = {
-  items: Item[];
-  shippingPrice: number;
-};
-
-export const useCartStore = defineStore("Cart", {
-  state: (): RootState => {
-    return {
-			items: [],
-			shippingPrice: 0,
-    };
-  },
-  getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-		// Add return value in TypeScript
-    totalPriceWithShipping(): number {
-      return this.totalPrice + this.shippingPrice;
-    },
-  },
-  actions: {
-    addItem(item: Item) {
-      this.items.push(item);
-    },
-    removeItem(id: Item["id"]) {
-      this.items = this.items.filter((item) => item.id !== id);
-    },
-  },
-});
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<p>Using getters in getters: TypeScript</p>
-						<pre><code data-trim data-line-numbers="25-28" class="hljs javascript">
-// stores/useCartStore.ts
-import { defineStore } from "pinia";
-
-type Item = {
-	id: number;
-  quantity: number;
-  price: number;
-};
-
-type RootState = {
-  items: Item[];
-  shippingPrice: number;
-};
-
-export const useCartStore = defineStore("Cart", {
-  state: (): RootState => {
-    return {
-			items: [],
-			shippingPrice: 0,
-    };
-  },
-  getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-		// Getter function can still accept `state`
-    totalPriceWithShipping(state): number {
-      return this.totalPrice + state.shippingPrice;
-    },
-  },
-  actions: {
-    addItem(item: Item) {
-      this.items.push(item);
-    },
-    removeItem(id: Item["id"]) {
-      this.items = this.items.filter((item) => item.id !== id);
-    },
-  },
-});
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<p>Using getters with parameters</p>
-						<pre><code data-trim data-line-numbers="25-26" class="hljs javascript">
-// stores/useCartStore.ts
-import { defineStore } from "pinia";
-
-type Item = {
-	id: number;
-  quantity: number;
-  price: number;
-};
-
-type RootState = {
-  items: Item[];
-  shippingPrice: number;
-};
-
-export const useCartStore = defineStore("Cart", {
-  state: (): RootState => {
-    return {
-			items: [],
-			shippingPrice: 0,
-    };
-  },
-  getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-		// This syntax wil also work, but your IDE will mark it as an error:
-    totalPriceWithShipping: (state) => state.totalPrice + state.shippingPrice,
-  },
-  actions: {
-    addItem(item: Item) {
-      this.items.push(item);
-    },
-    removeItem(id: Item["id"]) {
-      this.items = this.items.filter((item) => item.id !== id);
-    },
-  },
-});
-</code></pre>
-					</section>
-					<section data-auto-animate="">
-						<h2>Getters: Option Store</h2>
-						<p>Using getters with parameters</p>
-						<pre><code data-trim data-line-numbers="28" class="hljs javascript">
-// stores/useCartStore.ts
-import { defineStore } from "pinia";
-
-type Item = {
-	id: number;
-  quantity: number;
-  price: number;
-};
-
-type RootState = {
-  items: Item[];
-  shippingPrice: number;
-};
-
-export const useCartStore = defineStore("Cart", {
-  state: (): RootState => {
-    return {
-			items: [],
-			shippingPrice: 0,
-    };
-  },
-  getters: {
-    totalPrice: (state) =>
-      state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-    totalPriceWithShipping(state): number {
-      return this.totalPrice + state.shippingPrice;
-    },
-		getItem: (state) => (id) => state.items.find((item) => item.id === id);
-  },
-  actions: {
-    addItem(item: Item) {
-      this.items.push(item);
-    },
-    removeItem(id: Item["id"]) {
-      this.items = this.items.filter((item) => item.id !== id);
-    },
-  },
-});
-</code></pre>
-					</section>
-					<section>
-						<h2>Using getters with parameters</h2>
-						<p>Note that when doing this, getters are not cached anymore, they are simply functions that you invoke.</p>
-					</section>
-					<section data-auto-animate>
-						<h2>Getters: Setup Store</h2>
-						<pre><code data-trim data-line-numbers="" class="hljs javascript">
-// stores/useCartStore.[js,ts]
-import { computed, ref } from "vue";
-import { defineStore } from "pinia";
-	
-export const useCartStore = defineStore("Cart", () => {
-	// state
-	const items = ref([]);
-	const shippingPrice = ref(0);
-
-	// getters
-	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
-	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
-	const getItem = (id) => items.value.find((item) => item.id === id)
-
-	// actions
-	async function loadItems() {
-		const result = await fetch("/cart-endpoint");
-		this.items = await result.json();
-	}
-	function addItem(item) {
-		items.value.push(item);
-	}
-	function removeItem(id) {
-		items.value = items.value.filter((item) => item.id !== id);
-	}
-
-	return {
-		items,
-		totalPrice,
-		totalPriceWithShipping,
-		getItem,
-		loadItems,
-		addItem,
-		removeItem,
-	}
-})
-</code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Getters: Setup Store</h2>
-						<pre><code data-trim data-line-numbers="11,12,13,25-27" class="hljs javascript">
-// stores/useCartStore.[js,ts]
-import { computed, ref } from "vue";
-import { defineStore } from "pinia";
-	
-export const useCartStore = defineStore("Cart", () => {
-	// state
-	const items = ref([]);
-	const shippingPrice = ref(0);
-
-	// getters
-	const totalPrice = computed(() => items.value.reduce((acc, item) => item.quantity * item.price + acc, 0));
-	const totalPriceWithShipping = computed(() => totalPrice.value + shippingPrice.value);
-	const getItem = (id) => items.value.find((item) => item.id === id)
-
-	// actions
-	async function loadItems() {
-		const result = await fetch("/cart-endpoint");
-		this.items = await result.json();
-	}
-	function addItem(item) {
-		items.value.push(item);
-	}
-	function removeItem(id) {
-		items.value = items.value.filter((item) => item.id !== id);
-	}
-
-	return {
-		items,
-		totalPrice,
-		totalPriceWithShipping,
-		getItem,
-		loadItems,
-		addItem,
-		removeItem,
-	}
-})
-</code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Accessing getters</h2>
-						<pre><code data-trim data-line-numbers="" class="hljs">
-<script setup>
-	import { useCartStore } from "@/stores/useCartStore.js";
-
-	const cartStore = useCartStore();
-	console.log(cartStore.totalPrice);
-	console.log(cartStore.totalPriceWithShipping);
-</script>
-</code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Accessing getters</h2>
-						<!-- TODO Check this -->
-						<p>Destructure with <code>storeToRefs</code> will make getters reactive again</p>
-						<pre><code data-trim data-line-numbers="" class="hljs">
-<script setup>
-	import { storeToRefs } from "pinia";
-	import { useCartStore } from "@/stores/useCartStore.js";
-
-	const cartStore = useCartStore();
-	const { totalPrice, totalPriceWithShipping } = storeToRefs(cartStore);
-
-	console.log(totalPrice.value);
-	console.log(totalPriceWithShipping.value);
-</script>
-</code></pre>
-					</section>
-					<section>
-						Q: When to use <code>getters</code> instead of the <code>state</code>?
-					</section>
-					<section>
-						Q: When to use <code>getters</code> vs. <code>computed props</code>?
-					</section>
-					<section>
-						<h2>Exercise E: Getters</h2>
-						<ol>
-							<li>
-								Move the <code>computed properties</code> of <code>TodoList.vue</code> into the store as <code>getters</code>.
-							</li>
-							<li>
-								Create a getter which returns the amount of active, but incomplete items.
-							</li>
-							<li>
-								Import the store now also in <code>SideNavigation.vue</code>.
-							</li>
-							<li>
-								Replace the hardcoded number next to "TodoList" of <code>SideNavigation.vue</code> with the getter.
-							</li>
-							<li>Challenge: Use a nested getter for the count of active, but incomplete items.</li>
-						</ol>
-					</section>
-					<section>
 						<h2>Solution E</h2>
-						Branchname: <code>E-getters</code>
+						Branchname: <code>E-actions</code>
 					</section>
 				</section>
 				<section>
 					<section data-auto-animate="">
 						<h2>Composing Stores</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Composing Stores</h2>
+						<!-- TODO-->
+						<p>Idea: Circular!</p>
 					</section>
 					<section data-auto-animate="">
 						<h2>Composing Stores</h2>
@@ -2023,7 +2024,7 @@ export const useCartStore = defineStore("Cart", {
 						<p>https://pinia.vuejs.org/cookbook/composing-stores.html</p>
 					</section>
 					<section>
-						<h2>Exercise F</h2>
+						<h2>Exercise F: Composing Stores</h2>
 						<ol>
 							<li>
 								Create an action in <code>useStatisticStore</code> to update the count of todo items. The function receives the <code>count: number</code> as parameter.
@@ -2051,6 +2052,38 @@ export const useCartStore = defineStore("Cart", {
 				</section>
 				<section>
 					<h2>Migrate from Vuex to Pinia</h2>
+				</section>
+				<section>
+					<section>
+						<h3>Subscribing to actions and state</h3>
+						<p>Subscribing to actions can be useful, e.g. showing notifications, recording analytics data, handling errors for UI, and sentry to record</p>
+						<p>For debugging and undoing</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>FAQ</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Q: When would you use local vs. global store?</h2>
+					</section>
+					<section data-auto-animate="" data-visibility="hidden">
+						<h2>Q: When would you use local vs. global store?</h2>
+						<ul>
+							<li>Simple Parent/Child communication possible</li>
+							<li>Data belongs to component context</li>
+							<li>Data should not be shared between multiple component instances</li>
+						</ul>
+					</section>
+					<section data-auto-animate="">
+						Q: When to use <code>actions</code> vs. <code>direct mutation</code>?
+					</section>
+					<section data-auto-animate="">
+						Q: When to use <code>getters</code> instead of the <code>state</code>?
+					</section>
+					<section data-auto-animate="">
+						Q: When to use <code>getters</code> vs. <code>computed props</code>?
+					</section>
 				</section>
 				<section>
 					<h2>Any other questions?</h2>
