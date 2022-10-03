@@ -94,7 +94,7 @@ $ pnpm run dev
 							<div><small>Find the solutions to the exercises in feature branches, linked here in the slides. Each exercise has its own PR on Github.</small></div>
 						</div>
 					</section>
-					<section>
+					<section data-visibility="hidden">
 						<h2>Types of exercises</h2>
 						<ul>
 							<li>Install and register Pinia</li>
@@ -2056,19 +2056,15 @@ export const useCartStore = defineStore("Cart", {
 	</code></pre>
 					</section>
 					<section>
-						<h2>Circular dependencies</h2>
-						<p>https://pinia.vuejs.org/cookbook/composing-stores.html</p>
-					</section>
-					<section>
-						<!-- TODO: Circular dependencies -->
 						<h2>Exercise F: Composing Stores</h2>
 						<ol>
 							<li>
-								Create an action in <code>useStatisticStore</code> to update the count of todo items. The function receives the <code>count: number</code> as parameter.
+								Create an action <code>updateTodoItemsCount</code> in <code>useStatisticStore</code> to update the count of todo items. The function receives the <code>count: number</code> as parameter. Hint: You can use <code>const todoItems = this.stats.find(({ id }) => id === 2);</code> in the action to get the stats item for todo items.
 							</li>
 							<li>
 								Call this action from inside the <code>useTodoListStore</code> when adding new items.
 							</li>
+							<li>Challenge: Let's make the code a bit cleaner. Instead of passing the paramter <code>count</code>, call the action <code>updateTodoItemsCount</code> without parameters. In the action <code>updateTodoItemsCount</code>, import the <code>todoListStore</code>, to receive the count from either the state or a getter.</li>
 						</ol>
 						<p><small>Hint: It's not necessary to update the number, when a user archives an item. We want to show the total number of items, active and archived ones.</small></p>
 					</section>
@@ -2167,9 +2163,6 @@ export const useCartStore = defineStore("Cart", {
 					<section data-auto-animate="">
 						Q: When to use <code>getters</code> vs. <code>computed props</code>?
 					</section>
-				</section>
-				<section>
-					<h2>Any other questions?</h2>
 				</section>
 				<section>
 					<h2>Thank you!</h2>
