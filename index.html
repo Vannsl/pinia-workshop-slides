@@ -1061,12 +1061,12 @@ cartStore.$state = { items: [] };
     <p>Watch the whole instance with <code>deep: true</code></p>
       <pre><code data-trim data-line-numbers class="hljs typescript">
 watch(
-cartStore.state,
-(state) => {
-// persist the whole state to the local storage whenever it changes
-localStorage.setItem('cartStore', JSON.stringify(state))
+	cartStore.state,
+	(state) => {
+	// persist the whole state to the local storage whenever it changes
+	localStorage.setItem('cartStore', JSON.stringify(state))
 },
-{ deep: true }
+	{ deep: true }
 )	
 </code></pre>
   </section>
@@ -1452,7 +1452,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section>
 						<h2>Exercise D: Getters</h2>
-						<ol>
+						<ol style="font-size: 2rem;">
 							<li>
 								Move the <code>computed properties</code> of <code>TodoList.vue</code> into the store as <code>getters</code>.
 							</li>
