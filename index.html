@@ -1033,31 +1033,25 @@ cartStore.$patch({ items: [], shippingPrice: 0 })
   </section>
 	<section data-auto-animate>
     <h2>Mutating the state</h2>
-      <p>❌ Replacing</p>
+      <p>Replacing</p>
       <pre><code data-trim data-line-numbers>
 cartStore.$state = { items: [] };
 </code></pre>
-    <p><small>This doesn't actually replace the state. Pinia patches the updates under the hood.</small></p>
+    <p><small>This doesn't actually replace the state. Pinia patches the updates internally.</small></p>
   </section>
 	<section>
-		<h2>Mutating the state</h2>
-		<p>❌ Replacing</p>
-		<pre><code data-trim data-line-numbers>
-cartStore.$state = { items: [] };
-</code></pre>
-	<p><small>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</small></p>
-	<p>✅ Replacing</p>
-	<pre><code data-trim data-line-numbers class="hljs javascript">
-cartStore.$patch({ items: [] })				
-</code></pre>
-</section>
+		<picture>
+			<img src="img/typescript-state-replace.png" alt="" />
+			<figcaption><small>Pinia TypeScript Errors when trying to replace state with partial data</small></figcaption>
+		</picture>
+	</section>
 	<section data-auto-animate>
     <h2>Mutating the state</h2>
     <p>Initialization</p>
       <pre><code data-trim data-line-numbers>
         pinia.state.value = JSON.parse(window.__pinia)		
 </code></pre>
-<p><small>You can set the initial state, helpful e.g. in tests or for SSR.</small></p>
+<p><small>You can set the initial state for SSR when creating the Vue App for all stores.</small></p>
   </section>
   <section data-auto-animate>
     <h2>Observe any state changes</h2>
