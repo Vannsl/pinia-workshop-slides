@@ -458,7 +458,7 @@ export const useCartStore = defineStore("Cart", {
 					<section>
 						<h2>Exercise A: Install pinia</h2>
 						<small style="text-align: left;">
-							<ol>
+							<ol  style="font-size: 2rem; text-align: left;">
 								<li>
 									Install the pinia library
 								</li>
@@ -794,30 +794,34 @@ if (import.meta.hot) {
 					</section>
 					<section>
 						<h2>Exercise B: Creating State</h2>
-						<small style="text-align: left;">
-							<ol>
-								<li>
-									Create <code>state</code> in <code>useStatisticStore</code> using the Option Store Variant.
-								</li>
-								<li>
-									Move the <code>@/data/stats.json</code> from <code>AnalyticsStats.vue</code> to the <code>state</code> of the <code>useStatisticStore</code>
-								</li>
-								<li>
-									Replace the imported <code>stats</code> in <code>AnalyticsStats.vue</code> with the state from <code>useStatisticStore</code>.
-								</li>
-								<li>Move the state of <code>@/data/todoItems.json</code> from <code>TodoList.vue</code>to the <code>state</code> of the <code>useTodoListStore</code>
-								</li>
-								<li>
-									Replace the imported <code>todoItems</code> in <code>TodoList.vue</code> with the state from <code>useTodoListStore</code>.
-								</li>
-								<li>
-									Change the <code>stats values</code> using the Vue Dev Tools.
-								</li>
-								<li>
-									Challenge: Create another store file with the same functionality, using the Setup Store Variant.
-								</li>
-							</ol>
-						</small>
+						<ol style="font-size: 2rem; text-align: left;">
+							<li>
+								Create <code>state</code> in <code>useStatisticStore</code> using the Option Store Variant.
+							</li>
+							<li>
+								Move the <code>@/data/stats.json</code> from <code>AnalyticsStats.vue</code> to the <code>state</code> of the <code>useStatisticStore</code>
+							</li>
+							<li>
+								Replace the imported <code>stats</code> in <code>AnalyticsStats.vue</code> with the state from <code>useStatisticStore</code>.
+							</li>
+							<li>Move the state of <code>@/data/todoItems.json</code> from <code>TodoList.vue</code>to the <code>state</code> of the <code>useTodoListStore</code>
+							</li>
+							<li>
+								Replace the imported <code>todoItems</code> in <code>TodoList.vue</code> with the state from <code>useTodoListStore</code>.
+							</li>
+						</ol>
+					</section>
+					<section>
+						<h2>Exercise B: Creating State</h2>
+						<strong>Challenges:</strong>
+						<ol style="font-size: 2rem; text-align: left;">
+							<li>
+								Challenge 1: Change the <code>stats values</code> using the Vue Dev Tools.
+							</li>
+							<li>
+								Challenge 2: Create another store file with the same functionality, using the Setup Store Variant.
+							</li>
+						</ol>
 					</section>
 					<section>
 						<h2>Solution B</h2>
@@ -1084,19 +1088,23 @@ cartStore.$reset();
   </section>
   <section>
     <h2>Exercise C: Mutating state</h2>
-    <small style="text-align: left;">
-      <ol>
-        <li>Create the store <code>useColorSchemeStore</code>.</li>
-        <li>Add state variable <code>currentColorSchemeSlug</code>.</li>
-        <li>Set the default of the variable to <code>"light"</code>.</li>
-        <li>Update the variable when interacting with the radio buttons using a <code>v-model</code>.</li>
-        <li>Call the function <code>updateDom</code> when the config changes.</li>
-        <li>Challenge 1: Implement alternative solution using <code>$patch</code> to update the state. Check the difference of both versions in the Vue Dev Tools.</li>
-        <li>
-          Challenge 2: Persist the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
-        </li>
-      </ol>
-    </small>
+		<ol  style="font-size: 2rem; text-align: left;">
+			<li>Create the store <code>useColorSchemeStore</code>.</li>
+			<li>Add state variable <code>currentColorSchemeSlug</code>.</li>
+			<li>Set the default of the variable to <code>"light"</code>.</li>
+			<li>Update the variable when interacting with the radio buttons using a <code>v-model</code>.</li>
+			<li>Call the function <code>updateDom</code> when the config changes.</li>
+		</ol>
+  </section>
+  <section>
+    <h2>Exercise C: Mutating state</h2>
+		<strong>Challenges:</strong>
+		<ol  style="font-size: 2rem; text-align: left;">
+			<li>Challenge 1: Implement alternative solution using <code>$patch</code> to update the state. Check the difference of both versions in the Vue Dev Tools.</li>
+			<li>
+				Challenge 2: Persist the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
+			</li>
+		</ol>
   </section>
   <section>
     <h2>Solution C</h2>
@@ -1452,7 +1460,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section>
 						<h2>Exercise D: Getters</h2>
-						<ol style="font-size: 2rem;">
+						<ol style="font-size: 2rem; text-align: left;">
 							<li>
 								Move the <code>computed properties</code> of <code>TodoList.vue</code> into the store as <code>getters</code>.
 							</li>
@@ -1465,7 +1473,13 @@ export const useCartStore = defineStore("Cart", () => {
 							<li>
 								Replace the hardcoded number next to "TodoList" of <code>SideNavigation.vue</code> with the getter.
 							</li>
-							<li>Challenge: There a 3 <code>v-if="true"</code> in <code>TodoList.vue</code> Replace the hardcoded <code>booleans</code> with 3 (nested) getters, e.g. <code>hasTodoItems</code>, <code>hasActiveTodoItems</code>, and <code>hasArchivedTodoItems</code>.</li>
+						</ol>
+					</section>
+					<section>
+						<h2>Exercise D: Getters</h2>
+						<strong>Challenges:</strong>
+						<ol style="font-size: 2rem; text-align: left;">
+							<li>Challenge: There are 3 <code>v-if="true"</code> in <code>TodoList.vue</code> Replace the hardcoded <code>booleans</code> with 3 (nested) getters, e.g. <code>hasTodoItems</code>, <code>hasActiveTodoItems</code>, and <code>hasArchivedTodoItems</code>.</li>
 						</ol>
 					</section>
 					<section>
@@ -1817,7 +1831,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section>
 						<h2>Exercise E: Actions</h2>
-						<ol style="font-size: 2rem;">
+						<ol style="font-size: 2rem; text-align: left;">
 							<li>Create the action <code>addItem</code> with parameter <code>item: TodoItem</code>. Call the action in <code>TodoForm.vue</code>.</li>
 							<li>Create the action <code>setIsCompleted</code>. It gets the parameters <code>id</code> and a <code>boolean</code> value to update the field <code>isCompleted</code> of the item with the correct <code>id</code>.</li>
 							<li>In <code>TodoListItemActive.vue</code> find the <code>TODO</code> in <code>handleChange</code>. Get the <code>boolean</code> value of <code>event.target.checked</code> and use <code>emit</code> to communicate the value to the parent.</li>
@@ -1827,7 +1841,7 @@ export const useCartStore = defineStore("Cart", () => {
 					<section>
 						<h2>Exercise E</h2>
 						<strong>Challenges:</strong>
-						<ol style="font-size: 2rem;">
+						<ol style="font-size: 2rem; text-align: left;">
 							<li>Challenge 1: Archive and reactivate todo items. Create the action <code>setIsArchived</code> to update the field <code>isArchived</code> when the <code>emits</code> <code>on-archive</code> in <code>TodoListItemActive.vue</code> and <code>on-click</code> in <code>TodoListItemArchived</code> are fired.</li>
 							<li>Challenge 2: Replace the current implementation to update the <code>currentColorSchemeSlug</code> in <code>ColorSchemeToggle</code> with an <code>action</code>.</li>
 						</ol>
@@ -2051,13 +2065,20 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section>
 						<h2>Exercise F: Composing Stores</h2>
-						<ol style="font-size: 1.6rem;">
+						<ol style="font-size: 2rem; text-align: left;">
 							<li>
 								Create an action <code>updateTodoItemsCount</code> in <code>useStatisticStore</code> to update the count of todo items. The function receives the <code>count: number</code> as parameter. Hint: You can use <code>const todoItems = this.stats.find(({ id }) => id === 2);</code> in the action to get the stats item for todo items.
 							</li>
 							<li>
 								Call this action from inside the <code>useTodoListStore</code> when adding new items.
 							</li>
+						</ol>
+						<p><small>Hint: It's not necessary to update the number, when a user archives an item. We want to show the total number of items, active and archived ones.</small></p>
+					</section>
+					<section>
+						<h2>Exercise F: Composing Stores</h2>
+						<strong>Challenges:</strong>
+						<ol style="font-size: 2rem; text-align: left;">
 							<li>Challenge: Let's make the code a bit cleaner. Instead of passing the paramter <code>count</code>, call the action <code>updateTodoItemsCount</code> without parameters. In the action <code>updateTodoItemsCount</code>, import the <code>todoListStore</code>, to receive the count from either the state or a getter.</li>
 						</ol>
 						<p><small>Hint: It's not necessary to update the number, when a user archives an item. We want to show the total number of items, active and archived ones.</small></p>
@@ -2080,7 +2101,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section>
 						<h2>Exercise G: Migrate Vuex to Pinia</h2>
-						<ol style="font-size: 2rem;">
+						<ol style="font-size: 2rem; text-align: left;">
 							<li>
 								Replace the Vuex Store <code>/legacy_store/auth.js</code> with a Pinia Store <code>/stores/useAuthenticationStore.ts</code>
 							</li>
