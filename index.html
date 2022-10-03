@@ -91,7 +91,7 @@ $ pnpm run dev
 							<div><strong>Exercise</strong></div>
 							<div style="margin-bottom: 1rem"><small>Find the exercises here in the slides at the end of each section.</small></div>
 							<div><strong>Solution</strong></div>
-							<div><small>Find the solutions to the exercises in feature branches, linked here in the slides.</small></div>
+							<div><small>Find the solutions to the exercises in feature branches, linked here in the slides. Each exercise has its own PR on Github.</small></div>
 						</div>
 					</section>
 					<section>
@@ -451,7 +451,6 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate>
 						<h2>Creating a store</h2>
-						<!-- TODO: replace image -->
 						<img src="img/product-store.png">
 						<p><small>This <em>name</em>, also referred as id, is necessary and is used by Pinia to connect the store to the devtools. Naming the returned function use... is a convention across composables to make its usage idiomatic.
 						</small></p>
@@ -467,13 +466,13 @@ export const useCartStore = defineStore("Cart", {
 									Register pinia when creating the Vue application
 								</li>
 								<li>
-									Create your first <code>store</code> called <code>useStatisticStore</code>
+									Create your first store file called <code>useStatisticStore</code>
 								</li>
-								<li>Create a second <store>store</store> called <code>useTodoListStore</code></li>
+								<li>Create a second store file called <code>useTodoListStore</code></li>
 								<li>
-									Import the <code>useStatisticStore</code> in <code>AnalyticsStats.vue</code>
+									Import and initialize <code>useStatisticStore</code> in <code>AnalyticsStats.vue</code>
 								</li>
-								<li>Import the <code>useTodoListStore</code> in <code>TodoList.vue</code></li>
+								<li>Import and initialize <code>useTodoListStore</code> in <code>TodoList.vue</code></li>
 								<li>
 									Check your Dev Tools if you can see the Pinia stores
 								</li>
@@ -781,22 +780,6 @@ console.log(items.value);
 </script>
 </code></pre>
 					</section>
-					<section data-auto-animate data-visibility="hidden">
-						<h2>Accessing the state</h2>
-						<code>Copy</code>
-						<!-- TODO: Test if it works -->
-						<pre><code data-trim data-line-numbers="1,5" class="hljs handlebars">
-<script setup>
-import { toRef } from "vue";
-import { useCartStore } from "@/stores/useCartStore";
-
-const store = useCartStore();
-const items = toRef(store, "items");
-
-console.log(items.value);
-</script>
-</code></pre>
-					</section>
 					<section>
 						<h2>HMR Update</h2>
 						<pre><code data-trim data-line-numbers="1,4-7" class="hljs javascript">
@@ -814,24 +797,24 @@ if (import.meta.hot) {
 						<small style="text-align: left;">
 							<ol>
 								<li>
-									Decide for Option Store or Setup Store
+									Create <code>state</code> in <code>useStatisticStore</code> using the Option Store Variant.
 								</li>
 								<li>
 									Move the <code>@/data/stats.json</code> from <code>AnalyticsStats.vue</code> to the <code>state</code> of the <code>useStatisticStore</code>
 								</li>
 								<li>
-									Use the store state in <code></code>
+									Replace the imported <code>stats</code> in <code>AnalyticsStats.vue</code> with the state from <code>useStatisticStore</code>.
 								</li>
-								<li>Move the state of <code>@/data/todoItems.json</code> from <code></code>to the <code>state</code> of the <code>useTodoListStore</code>
-								</li>
-								<li>
-									Change the <code>stats values</code> using the Vue Dev Tools
+								<li>Move the state of <code>@/data/todoItems.json</code> from <code>TodoList.vue</code>to the <code>state</code> of the <code>useTodoListStore</code>
 								</li>
 								<li>
-									Use the store state in <code>TodoList.vue</code>
+									Replace the imported <code>todoItems</code> in <code>TodoList.vue</code> with the state from <code>useTodoListStore</code>.
 								</li>
 								<li>
-									Bonus A: Implement both versions, Option and Setup Store
+									Change the <code>stats values</code> using the Vue Dev Tools.
+								</li>
+								<li>
+									Challenge: Create another store file with the same functionality, using the Setup Store Variant.
 								</li>
 							</ol>
 						</small>
@@ -857,8 +840,7 @@ if (import.meta.hot) {
 							<li>Patching (Object)</li>
 							<li>Patching (Function)</li>
 						</ul>
-					</section>
-					<section data-auto-animate>
+					</section><section data-auto-animate>
 						<h2>Mutating the state</h2>
 						<ul>
 							<li><strong>Directly</strong></li>
@@ -887,180 +869,246 @@ if (import.meta.hot) {
 							</template>		
 						</code></pre>
 					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-						<ul>
-							<li>Directly</li>
-							<li><strong>Patch (Object)</strong></li>
-							<li>Patching (Function)</li>
-						</ul>
-						<pre><code data-trim data-line-numbers>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li><strong>Patch (Object)</strong></li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers>
 cartStore.$patch({ items: [], shippingPrice: 0 })				
 </code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-						<ul>
-							<li>Directly</li>
-							<li><strong>Patch (Object)</strong></li>
-							<li>Patching (Function)</li>
-						</ul>
-						<pre><code data-trim data-line-numbers class="hljs javascript">
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li><strong>Patch (Object)</strong></li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers class="hljs javascript">
 cartStore.$patch({ items: [], shippingPrice: 0 })				
 </code></pre>
-						<p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-						<ul>
-							<li>Directly</li>
-							<li><strong>Patch (Object)</strong></li>
-							<li>Patching (Function)</li>
-						</ul>
-						<pre><code data-trim data-line-numbers class="hljs javascript">
+    <p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
+  </section>
+
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li><strong>Patch (Object)</strong></li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers class="hljs javascript">
 cartStore.$patch({ items: [], shippingPrice: 0 })				
 </code></pre>
-						<p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
-						<p><small>The Vue Dev Tools will show the mutations as a group.</small></p>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-						<ul>
-							<li>Directly</li>
-							<li>Patching (Object)</li>
-							<li><strong>Patch (Function)</strong></li>
-						</ul>
-						<pre><code data-trim data-line-numbers>
-							cartStore.$patch((state) => {
-								state.items.push({ name: "shirt", price: 26, amount: 1 });
-								state.shippingPrice = 5;
-							})					
-							</code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-						<ul>
-							<li>Directly</li>
-							<li>Patching (Object)</li>
-							<li><strong>Patch (Function)</strong></li>
-						</ul>
-						<pre><code data-trim data-line-numbers>
-							cartStore.$patch((state) => {
-								state.items.push({ name: "shirt", price: 26, amount: 1 });
-								state.shippingPrice = 5;
-							})					
-							</code></pre>
-							<p><small>Sometimes, it can be hard to express a mutation in object syntax. You can pass a function instead. E.g. for pushing items to an array.</small></p>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-							<p>❌ Replacing</p>
-							<pre><code data-trim data-line-numbers>
+    <p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
+    <p><small>The Vue Dev Tools will show the mutations as a group.</small></p>
+  </section>
+
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li>Patching (Object)</li>
+      <li><strong>Patch (Function)</strong></li>
+    </ul>
+    <pre><code data-trim data-line-numbers>
+      cartStore.$patch((state) => {
+        state.items.push({ name: "shirt", price: 26, amount: 1 });
+        state.shippingPrice = 5;
+      })					
+      </code></pre>
+  </section>
+	<section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li>Patching (Object)</li>
+      <li>Patching (Function)</li>
+    </ul>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li><strong>Directly</strong></li>
+      <li>Patching (Object)</li>
+      <li>Patching (Function)</li>
+    </ul>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li><strong>Directly</strong></li>
+      <li>Patching (Object)</li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers class="hljs handlebars">
+      <script setup>
+        // ...
+        cartStore.items = [];
+        cartStore.shippingPrice = 0;		
+        // ...
+      </script>
+    </code></pre>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li><strong>Directly</strong></li>
+      <li>Patching (Object)</li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers class="hljs handlebars">
+      <template>
+        <input v-model="cartStore.shippingPrice" type="number">		
+      </template>		
+    </code></pre>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li><strong>Patch (Object)</strong></li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers>
+cartStore.$patch({ items: [], shippingPrice: 0 })				
+</code></pre>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li><strong>Patch (Object)</strong></li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers class="hljs javascript">
+cartStore.$patch({ items: [], shippingPrice: 0 })				
+</code></pre>
+    <p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li><strong>Patch (Object)</strong></li>
+      <li>Patching (Function)</li>
+    </ul>
+    <pre><code data-trim data-line-numbers class="hljs javascript">
+cartStore.$patch({ items: [], shippingPrice: 0 })				
+</code></pre>
+    <p><small>Use <code>$patch</code> to apply multiple changes together passing a partial <code>state</code> object.</small></p>
+    <p><small>The Vue Dev Tools will show the mutations as a group.</small></p>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li>Patching (Object)</li>
+      <li><strong>Patch (Function)</strong></li>
+    </ul>
+    <pre><code data-trim data-line-numbers>
+      cartStore.$patch((state) => {
+        state.items.push({ name: "shirt", price: 26, amount: 1 });
+        state.shippingPrice = 5;
+      })					
+      </code></pre>
+  </section>
+  <section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <ul>
+      <li>Directly</li>
+      <li>Patching (Object)</li>
+      <li><strong>Patch (Function)</strong></li>
+    </ul>
+    <pre><code data-trim data-line-numbers>
+      cartStore.$patch((state) => {
+        state.items.push({ name: "shirt", price: 26, amount: 1 });
+        state.shippingPrice = 5;
+      })					
+      </code></pre>
+      <p><small>Sometimes, it can be hard to express a mutation in object syntax. You can pass a function instead. E.g. for pushing items to an array.</small></p>
+  </section>
+	<section data-auto-animate>
+    <h2>Mutating the state</h2>
+      <p>❌ Replacing</p>
+      <pre><code data-trim data-line-numbers>
 cartStore.$state = { items: [] };
 </code></pre>
-						<p><small>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</small></p>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-							<p>❌ Replacing</p>
-							<pre><code data-trim data-line-numbers>
+    <p><small>This doesn't actually replace the state. Pinia patches the updates under the hood.</small></p>
+  </section>
+	<section>
+		<h2>Mutating the state</h2>
+		<p>❌ Replacing</p>
+		<pre><code data-trim data-line-numbers>
 cartStore.$state = { items: [] };
 </code></pre>
-						<p><small>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</small></p>
-						<p>✅ Replacing</p>
-						<pre><code data-trim data-line-numbers class="hljs javascript">
+	<p><small>Replacing state like this would break reactivity. Instead, use <code>$patch</code>.</small></p>
+	<p>✅ Replacing</p>
+	<pre><code data-trim data-line-numbers class="hljs javascript">
 cartStore.$patch({ items: [] })				
 </code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Mutating the state</h2>
-						<p>Initialization</p>
-							<pre><code data-trim data-line-numbers>
-								pinia.state.value = JSON.parse(window.__pinia)		
+</section>
+	<section data-auto-animate>
+    <h2>Mutating the state</h2>
+    <p>Initialization</p>
+      <pre><code data-trim data-line-numbers>
+        pinia.state.value = JSON.parse(window.__pinia)		
 </code></pre>
 <p><small>You can set the initial state, helpful e.g. in tests or for SSR.</small></p>
-					</section>
-					<section data-auto-animate>
-						<h2>Observe any state changes</h2>
-					</section>
-					<section data-auto-animate>
-						<h2>Observe any state changes</h2>
-						<p>Watch the whole instance with <code>deep: true</code></p>
-							<pre><code data-trim data-line-numbers class="hljs typescript">
+  </section>
+  <section data-auto-animate>
+    <h2>Observe any state changes</h2>
+  </section>
+  <section data-auto-animate>
+    <h2>Observe any state changes</h2>
+    <p>Watch the whole instance with <code>deep: true</code></p>
+      <pre><code data-trim data-line-numbers class="hljs typescript">
 watch(
-	cartStore.state,
-	(state) => {
-		// persist the whole state to the local storage whenever it changes
-		localStorage.setItem('cartStore', JSON.stringify(state))
-	},
-	{ deep: true }
+cartStore.state,
+(state) => {
+// persist the whole state to the local storage whenever it changes
+localStorage.setItem('cartStore', JSON.stringify(state))
+},
+{ deep: true }
 )	
 </code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Subscribing to the state</h2>
-					</section>
-					<section data-auto-animate>
-						<h2>Subscribing to the state</h2>
-							<pre><code data-trim data-line-numbers class="hljs typescript">
-cartStore.$subscribe((mutation, state) => {
-	// import { MutationType } from 'pinia'
-	mutation.type // 'direct' | 'patch object' | 'patch function'
-	// same as cartStore.$id
-	mutation.storeId // 'cart'
-	// only available with mutation.type === 'patch object'
-	mutation.payload // patch object passed to cartStore.$patch()
-
-	// persist the whole state to the local storage whenever it changes
-	localStorage.setItem('cartStore', JSON.stringify(state))
-})	
-</code></pre>
-					</section>
-					<section data-auto-animate>
-						<h2>Subscribing to the state</h2>
-						<p>You can call <code>$subscribe</code> in the <code>setup</code> function of Vue. It automatically gets removed when the component is <code>unmounted</code>.</p>
-					</section>
-					<section data-auto-animate>
-						<h2>Subscribing vs. watch 🤔</h2>
-					</section>
-					<section data-auto-animate>
-						<h2>Subscribing vs. watch 🤔</h2>
-						<p>The advantage of using <code>$subscribe()</code> over a regular <code>watch()</code> is that subscriptions will trigger only once after patches.</p>
-					</section>
-					<section data-auto-animate>
-						<h2>Resetting the state</h2>
-					</section>
-					<section data-auto-animate>
-						<h2>Resetting the state</h2>
-						<p>Resets the state of <strong>exactly this store</strong>.</p>
-							<pre><code data-trim data-line-numbers>
+  </section>
+  <section data-auto-animate>
+    <h2>Resetting the state</h2>
+  </section>
+  <section data-auto-animate>
+    <h2>Resetting the state</h2>
+    <p>Resets the state of <strong>exactly this store</strong>.</p>
+      <pre><code data-trim data-line-numbers>
 const cartStore = useCartStore();
 
 cartStore.$reset();
 </code></pre>
-					</section>
-					<section>
-						<h2>Exercise C: Mutating state</h2>
-						<small style="text-align: left;">
-							<ol>
-								<li>Create the store <code>useColorSchemeStore</code>.</li>
-								<li>Add state variable <code>currentColorSchemeSlug</code>.</li>
-								<li>Set the default of the variable to <code>"light"</code>.</li>
-								<li>Update the variable when interacting with the radio buttons using a <code>v-model</code>.</li>
-								<li>Add or remove the CSS class <code>dark</code> on the <code>html</code> attribute depending on the value of <code>currentColorSchemeSlug</code>. (Hint: <code>watch</code> or <code>$subscribe</code>)</li>
-								<li>Bonus 1: Implement alternative solution using <code>$patch</code> to update the state.</li>
-								<li>
-									Bonus 2: Sync the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
-								</li>
-							</ol>
-						</small>
-					</section>
-					<section>
-						<h2>Solution C</h2>
-						Branchname: <code>C-mutating-state</code>
-					</section>
+  </section>
+  <section>
+    <h2>Exercise C: Mutating state</h2>
+    <small style="text-align: left;">
+      <ol>
+        <li>Create the store <code>useColorSchemeStore</code>.</li>
+        <li>Add state variable <code>currentColorSchemeSlug</code>.</li>
+        <li>Set the default of the variable to <code>"light"</code>.</li>
+        <li>Update the variable when interacting with the radio buttons using a <code>v-model</code>.</li>
+        <li>Call the function <code>updateDom</code> when the config changes.</li>
+        <li>Challenge 1: Implement alternative solution using <code>$patch</code> to update the state. Check the difference of both versions in the Vue Dev Tools.</li>
+        <li>
+          Challenge 2: Persist the pinia store with the Local Storage (Tip: <a href="https://vueuse.org/core/useStorage/" target="_blank" rel="noopener">@vueuse/core</a>)
+        </li>
+      </ol>
+    </small>
+  </section>
+  <section>
+    <h2>Solution C</h2>
+    Branchname: <code>C-mutating-state</code>
+  </section>
 				</section>
-
 				<section>
 					<section data-auto-animate="">
 						<h2>Getters</h2>
@@ -1162,7 +1210,6 @@ export const useCartStore = defineStore("Cart", {
   getters: {
     totalPrice: (state) =>
       state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-		// as in actions, don't use arrow function to access `this`
     totalPriceWithShipping() {
       return this.totalPrice + this.shippingPrice;
     },
@@ -1171,6 +1218,14 @@ export const useCartStore = defineStore("Cart", {
 });
 
 </code></pre>
+					</section>
+					<section data-auto-animate="">
+						<h2>Getters: Option Store</h2>
+						<p>Using getters in getters: TypeScript</p>
+						<picture>
+							<img src="img/typescript-pinia-error.png" alt="" />
+							<figcaption><small>Pinia TypeScript Errors when using nested getters</small></figcaption>
+						</picture>
 					</section>
 					<section data-auto-animate="">
 						<h2>Getters: Option Store</h2>
@@ -1274,7 +1329,7 @@ export const useCartStore = defineStore("Cart", {
   getters: {
     totalPrice: (state) =>
       state.items.reduce((acc, item) => item.quantity * item.price + acc, 0),
-		// This syntax wil also work, but your IDE will mark it as an error:
+		// This syntax will also work, but your IDE will mark it as an error:
     totalPriceWithShipping: (state) => state.totalPrice + state.shippingPrice,
   },
   actions: {},
@@ -1350,8 +1405,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section data-auto-animate>
 						<h2>Getters: Setup Store</h2>
-						<!-- TODO: Update numbers-->
-						<pre><code data-trim data-line-numbers="11,12,13,25-27" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="11,12,13,17-19" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
@@ -1389,8 +1443,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section data-auto-animate>
 						<h2>Accessing getters</h2>
-						<!-- TODO Check this -->
-						<p>Destructure with <code>storeToRefs</code> will make getters reactive again</p>
+						<p>You cannot change Refs from getters!</p>
 						<pre><code data-trim data-line-numbers="" class="hljs">
 <script setup>
 	import { storeToRefs } from "pinia";
@@ -1399,8 +1452,7 @@ export const useCartStore = defineStore("Cart", () => {
 	const cartStore = useCartStore();
 	const { totalPrice, totalPriceWithShipping } = storeToRefs(cartStore);
 
-	console.log(totalPrice.value);
-	console.log(totalPriceWithShipping.value);
+	totalPrice.value = 0; // ❌ Write operation failed: computed value is readonly
 </script>
 </code></pre>
 					</section>
@@ -1419,7 +1471,7 @@ export const useCartStore = defineStore("Cart", () => {
 							<li>
 								Replace the hardcoded number next to "TodoList" of <code>SideNavigation.vue</code> with the getter.
 							</li>
-							<li>Challenge: Use a nested getter for the count of active, but incomplete items.</li>
+							<li>Challenge: There a 3 <code>v-if="true"</code> in <code>TodoList.vue</code> Replace the hardcoded <code>booleans</code> with 3 (nested) getters, e.g. <code>hasTodoItems</code>, <code>hasActiveTodoItems</code>, and <code>hasArchivedTodoItems</code>.</li>
 						</ol>
 					</section>
 					<section>
@@ -1440,7 +1492,6 @@ export const useCartStore = defineStore("Cart", () => {
 					<section data-auto-animate="">
 						<h2>Actions</h2>
 						<ul>
-							<!-- TODO: can you? -->
 							<li>Actions are the equivalent of <code>methods</code> in components.</li>
 							<li>You can call other actions of the same (and other) stores in your action.</li>
 						</ul>
@@ -1509,8 +1560,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions: Option Store</h2>
-						<!-- TODO: Update numbers-->
-						<pre><code data-trim data-line-numbers="12-17" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="20-25" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -1542,8 +1592,7 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate="">
 						<h2>Actions: Option Store</h2>
-						<!-- TODO: Update numbers-->
-						<pre><code data-trim data-line-numbers="12-19" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="20-27" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -1576,9 +1625,8 @@ export const useCartStore = defineStore("Cart", {
 </code></pre>
 					</section>
 					<section data-auto-animate="">
-						<!-- TODO: Update numbers-->
 						<h2>Actions: Option Store <em>Patch</em></h2>
-						<pre><code data-trim data-line-numbers="12-16" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="20-27" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -1611,9 +1659,8 @@ export const useCartStore = defineStore("Cart", {
 </code></pre>
 					</section>
 					<section data-auto-animate="">
-						<!-- TODO: Update numbers-->
 						<h2>Actions: Option Store <em>Async</em></h2>
-						<pre><code data-trim data-line-numbers="12-15" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="20-29" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { defineStore } from "pinia";
 	
@@ -1694,8 +1741,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section data-auto-animate>
 						<h2>Actions: Setup Store</h2>
-						<!-- TODO: Update number-->
-						<pre><code data-trim data-line-numbers="11-20,25-27" class="hljs javascript">
+						<pre><code data-trim data-line-numbers="16-25,33-35" class="hljs javascript">
 // stores/useCartStore.[js,ts]
 import { ref } from "vue";
 import { defineStore } from "pinia";
@@ -1737,14 +1783,13 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section data-auto-animate>
 						<h2>Accessing actions</h2>
-						<!-- TODO: test if this works -->
 						<pre><code data-trim data-line-numbers="" class="hljs">
 <script setup>
 	import { useCartStore } from "@/stores/useCartStore.js";
 
 	const cartStore = useCartStore();
 	
-	await cartStore.loadItems();
+	cartStore.addItem();
 </script>
 </code></pre>
 					</section>
@@ -1757,7 +1802,7 @@ export const useCartStore = defineStore("Cart", () => {
 	import { useCartStore } from "@/stores/useCartStore.js";
 
 	const cartStore = useCartStore();
-	const { loadItems } = storeToRefs(cartStore); ❌
+	const { loadItems } = storeToRefs(cartStore); // ❌
 	
 	await loadItems();
 </script>
@@ -1770,7 +1815,7 @@ export const useCartStore = defineStore("Cart", () => {
 <script setup>
 	import { useCartStore } from "@/stores/useCartStore.js";
 
-	const { loadItems } = useCartStore();
+	const { loadItems } = useCartStore(); // ✅
 	
 	await loadItems();
 </script>
@@ -1779,20 +1824,18 @@ export const useCartStore = defineStore("Cart", () => {
 					<section>
 						<h2>Exercise E: Actions</h2>
 						<ol style="font-size: 2rem;">
-							<li>Create action(s) to change the <strong>completeness</strong> state of an item.</li>
-							<li>Create action(s) to change the <strong>archived</strong> state of an item.</li>
-							<li>Create an action to <strong>add</strong> a new item.</li>
-							<li>Hint: You can move the function <code>createNewTodoItem()</code>... <code>this.todoItems.length + 1</code> as ID for added items</li>
+							<li>Create the action <code>addItem</code> with parameter <code>item: TodoItem</code>. Call the action in <code>TodoForm.vue</code>.</li>
+							<li>Create the action <code>setIsCompleted</code>. It gets the parameters <code>id</code> and a <code>boolean</code> value to update the field <code>isCompleted</code> of the item with the correct <code>id</code>.</li>
+							<li>In <code>TodoListItemActive.vue</code> find the <code>TODO</code> in <code>handleChange</code>. Get the <code>boolean</code> value of <code>event.target.checked</code> and use <code>emit</code> to communicate the value to the parent.</li>
+							<li>Call the action <code>setIsCompleted</code> in <code>on-change</code> in file <code>TodoList.vue</code></li>
 						</ol>
 					</section>
-					<section data-visibility="hidden">
+					<section>
 						<h2>Exercise E</h2>
-						<strong>Bonus:</strong>
+						<strong>Challenges:</strong>
 						<ol style="font-size: 2rem;">
-							<li>Create an action in <code>useColorSchemeStore</code> to update the state variable. This replaces the direct mutation using the <code>v-model</code></li>
-							<li>Update the LocalStorage in the store action.</li>
-							<li>Call the action in the component.</li>
-							<li>Hint: It might be useful <strong>copy</strong> the store variable <code>currentColorSchemeslug</code> first.</li>
+							<li>Challenge 1: Archive and reactivate todo items. Create the action <code>setIsArchived</code> to update the field <code>isArchived</code> when the <code>emits</code> <code>on-archive</code> in <code>TodoListItemActive.vue</code> and <code>on-click</code> in <code>TodoListItemArchived</code> are fired.</li>
+							<li>Challenge 2: Replace the current implementation to update the <code>currentColorSchemeSlug</code> in <code>ColorSchemeToggle</code> with an <code>action</code>.</li>
 						</ol>
 					</section>
 					<section>
@@ -1806,11 +1849,7 @@ export const useCartStore = defineStore("Cart", () => {
 					</section>
 					<section data-auto-animate="">
 						<h2>Composing Stores</h2>
-						<!-- TODO-->
-						<p>Idea: Circular!</p>
-					</section>
-					<section data-auto-animate="">
-						<h2>Composing Stores</h2>
+						<p>Using Composables in stores</p>
 						<pre><code data-trim data-line-numbers="5">
 // stores/useColorSchemeStore.[js,ts]
 export const useColorSchemeStore = defineStore("ColorScheme", {
@@ -1856,19 +1895,17 @@ export const useCartStore = defineStore("Cart", {
 		removeItem(id) {
 			this.items = this.items.filter((item) => item.id !== id);
 		},
-		async purchaseItems() {
-      if (!user.name) return;
+	 purchaseItems() {
+      if (!user.name) return; // ❌ Error in console
 
       const numOfItems = this.items.length;
       this.items = [];
 
       return numOfItems;
-    }
+    },
 	},
 })
 </code></pre>
-<!-- TODO -->
-<p>Error in IDE Screenshot</p>
 					</section>
 					<section data-auto-animate="">
 						<h2>Composing Stores: Options Store</h2>
@@ -1902,15 +1939,15 @@ export const useCartStore = defineStore("Cart", {
 		removeItem(id) {
 			this.items = this.items.filter((item) => item.id !== id);
 		},
-		async purchaseItems() {
-      const user = useUserStore();
+		purchaseItems() {
+      const user = useUserStore(); // ✅
       if (!user.name) return;
 
       const numOfItems = this.items.length;
       this.items = [];
 
       return numOfItems;
-    }
+    },
 	},
 })
 </code></pre>
@@ -1943,15 +1980,15 @@ export const useCartStore = defineStore("Cart", {
 		function removeItem(id) {
 			items.value = items.value.filter((item) => item.id !== id);
 		}
-		async function purchaseItems() {
-			const user = useUserStore();
-      if (!user.name) return;
+		function purchaseItems() {
+      const user = useUserStore();
+      if (!user.name) return;  // ✅
 
       const numOfItems = this.items.length;
       this.items = [];
 
       return numOfItems;
-		}
+    }
 	
 		return {
 			items,
@@ -1996,8 +2033,8 @@ export const useCartStore = defineStore("Cart", {
 		function removeItem(id) {
 			items.value = items.value.filter((item) => item.id !== id);
 		}
-		async function purchaseItems() {
-      if (!user.name) return;
+		function purchaseItems() {
+      if (!user.name) return;  // ✅
 
       const numOfItems = this.items.length;
       this.items = [];
@@ -2023,6 +2060,7 @@ export const useCartStore = defineStore("Cart", {
 						<p>https://pinia.vuejs.org/cookbook/composing-stores.html</p>
 					</section>
 					<section>
+						<!-- TODO: Circular dependencies -->
 						<h2>Exercise F: Composing Stores</h2>
 						<ol>
 							<li>
@@ -2039,9 +2077,28 @@ export const useCartStore = defineStore("Cart", {
 						Branchname: <code>F-composing-stores</code>
 					</section>
 				</section>
-				<section data-visibility="hidden">
+				<section>
 					<section data-auto-animate="">
 						<h2>Migrate from Vuex to Pinia</h2>
+					</section>
+					<section data-auto-animate="">
+						<h2>Migrate from Vuex to Pinia</h2>
+					</section>
+					<section>
+						<h2>Exercise G: Migrate Vuex to Pinia</h2>
+						<ol>
+							<li>
+								Replace the Vuex Store <code>/legacy_store/auth.js</code> with a Pinia Store <code>/stores/useAuthenticationStore.ts</code>
+							</li>
+							<li>
+								Replace the getters and mutation in <code>/views/AnalyticsView.vue</code>, <code>/views/TodoVue.vue</code>, and <code>/components/LoginAction.vue</code> with the ones from the Pinia Store. Hint: You can use <code>storeToRefs</code> in the <code>view</code> components.
+							</li>
+							<li>Remove the Vuex <code>dependency</code> and its <code>registration</code> in <code>main.ts</code></li>
+						</ol>
+					</section>
+					<section>
+						<h2>Solution G</h2>
+						Branchname: <code>G-vuex-to-pinia-migration</code>
 					</section>
 				</section>
 				<section data-visibility="hidden">
@@ -2049,10 +2106,37 @@ export const useCartStore = defineStore("Cart", {
 						<h2>Pinia testing</h2>
 					</section>
 				</section>
-				<section>
-					<h2>Migrate from Vuex to Pinia</h2>
-				</section>
-				<section>
+				<section data-visibility="hidden">
+					<section data-auto-animate>
+						<h2>Subscribing to the state</h2>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing to the state</h2>
+							<pre><code data-trim data-line-numbers class="hljs typescript">
+				cartStore.$subscribe((mutation, state) => {
+				// import { MutationType } from 'pinia'
+				mutation.type // 'direct' | 'patch object' | 'patch function'
+				// same as cartStore.$id
+				mutation.storeId // 'cart'
+				// only available with mutation.type === 'patch object'
+				mutation.payload // patch object passed to cartStore.$patch()
+				
+				// persist the whole state to the local storage whenever it changes
+				localStorage.setItem('cartStore', JSON.stringify(state))
+				})	
+				</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing to the state</h2>
+						<p>You can call <code>$subscribe</code> in the <code>setup</code> function of Vue. It automatically gets removed when the component is <code>unmounted</code>.</p>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing vs. watch 🤔</h2>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing vs. watch 🤔</h2>
+						<p>The advantage of using <code>$subscribe()</code> over a regular <code>watch()</code> is that subscriptions will trigger only once after patches.</p>
+					</section>
 					<section>
 						<h3>Subscribing to actions and state</h3>
 						<p>Subscribing to actions can be useful, e.g. showing notifications, recording analytics data, handling errors for UI, and sentry to record</p>
