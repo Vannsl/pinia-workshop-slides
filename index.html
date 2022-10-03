@@ -2120,7 +2120,7 @@ export const useCartStore = defineStore("Cart", {
 						<h2>Pinia testing</h2>
 					</section>
 				</section>
-				<section data-visibility="hidden">
+				<section>
 					<section data-auto-animate>
 						<h2>Subscribing to the state</h2>
 					</section>
@@ -2128,20 +2128,44 @@ export const useCartStore = defineStore("Cart", {
 						<h2>Subscribing to the state</h2>
 							<pre><code data-trim data-line-numbers class="hljs typescript">
 				cartStore.$subscribe((mutation, state) => {
-				// import { MutationType } from 'pinia'
-				mutation.type // 'direct' | 'patch object' | 'patch function'
-				// same as cartStore.$id
-				mutation.storeId // 'cart'
-				// only available with mutation.type === 'patch object'
-				mutation.payload // patch object passed to cartStore.$patch()
-				
-				// persist the whole state to the local storage whenever it changes
-				localStorage.setItem('cartStore', JSON.stringify(state))
+					// import { MutationType } from 'pinia'
+					mutation.type // 'direct' | 'patch object' | 'patch function'
+					// same as cartStore.$id
+					mutation.storeId // 'cart'
+					// only available with mutation.type === 'patch object'
+					mutation.payload // patch object passed to cartStore.$patch()
+					
+					// persist the whole state to the local storage whenever it changes
+					localStorage.setItem('cartStore', JSON.stringify(state))
 				})	
 				</code></pre>
 					</section>
 					<section data-auto-animate>
-						<h2>Subscribing to the state</h2>
+						<h2>Subscribing to an action</h2>
+							<pre><code data-trim data-line-numbers class="hljs typescript">
+const unsubscribe = cartStore.$onAction(({ name, store, args, after, onError }) => {
+	// Right before the action is executed.
+	console.log("Start");
+
+	after((result) => {
+		// After the action (including promise) was executed
+		console.info(result)
+		if (name === "purchaseItems") {
+			showConfetti();
+		}
+	});
+
+	onError((error) => {
+		// This error is not catched automatically.
+		console.warn(E);
+	});
+});
+
+unsubscribe();
+				</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h2>Subscribing</h2>
 						<p>You can call <code>$subscribe</code> in the <code>setup</code> function of Vue. It automatically gets removed when the component is <code>unmounted</code>.</p>
 					</section>
 					<section data-auto-animate>
@@ -2149,12 +2173,15 @@ export const useCartStore = defineStore("Cart", {
 					</section>
 					<section data-auto-animate>
 						<h2>Subscribing vs. watch 🤔</h2>
-						<p>The advantage of using <code>$subscribe()</code> over a regular <code>watch()</code> is that subscriptions will trigger only once after patches.</p>
+						<p>The advantage of using <code>$subscribe()</code> over a regular <code>watch()</code> is that subscriptions will trigger only once after patches. It's a method very helpful when debubbing.</p>
 					</section>
 					<section>
 						<h3>Subscribing to actions and state</h3>
-						<p>Subscribing to actions can be useful, e.g. showing notifications, recording analytics data, handling errors for UI, and sentry to record</p>
-						<p>For debugging and undoing</p>
+						<ul>
+							<li>Global UI handling (e.g. dialogs, notifications, animations...)</li>
+							<li>Recording data for your analytics tool</li>
+							<li>Communicating errors to Error Monitoring tools</li>
+						</ul>
 					</section>
 				</section>
 				<section>
